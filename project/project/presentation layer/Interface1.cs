@@ -7,5 +7,6 @@ namespace project.presentation_layer
     interface IUserInterface
     {
         string SelectFunction();
+        void ErrorMessage(string message);
     }
 }
