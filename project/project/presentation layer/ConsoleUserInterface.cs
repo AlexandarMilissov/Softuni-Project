@@ -6,8 +6,18 @@ namespace project.presentation_layer
 {
     class ConsoleUserInterface : IUserInterface
     {
+        public void ViewNote(string noteName, string note)
+        {
+            Console.Clear();
+            Console.Write(noteName + "\n\n" +
+                          note + "\n\n" +
+                          "Press any key to continue");
+
+        }
+
         void IUserInterface.ErrorMessage(string message)
         {
+            Console.Clear();
             Console.Write(message + "\n" +
                           "Press any key to continue");
             Console.Read();
