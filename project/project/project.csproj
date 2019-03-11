@@ -8,7 +8,6 @@
   <ItemGroup>
     <Folder Include="database layer\" />
     <Folder Include="engine layer\" />
-    <Folder Include="presentation layer\" />
   </ItemGroup>
 
 </Project>

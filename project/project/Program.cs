@@ -1,4 +1,5 @@
 ﻿using System;
+using project.presentation_layer;
 
 namespace project
 {
@@ -6,7 +7,6 @@ namespace project
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
         }
     }
 }
