@@ -15,6 +15,19 @@ namespace project.presentation_layer
 
         }
 
+        public string ViewNotesNames(List<string> noteNames)
+        {
+            int count = 1;
+            foreach(string name in noteNames)
+            {
+                Console.WriteLine(count + ". " + name);
+                count++;
+            }
+            Console.Write("Please write the number of the funtion you want to use and press 'Enter'\n");
+            string answer = Console.ReadLine();
+            return answer;
+        }
+
         void IUserInterface.ErrorMessage(string message)
         {
             Console.Clear();
