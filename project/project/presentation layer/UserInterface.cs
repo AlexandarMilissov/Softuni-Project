@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace project.presentation_layer
 {
@@ -10,6 +11,6 @@ namespace project.presentation_layer
         void ErrorMessage(string message);
         void ViewNote(string noteName, string note);
         string ViewNotesNames(List<string> noteNames);
-        string[] CreateNote();
+        List<string> CreateNote();
     }
 }
