@@ -6,6 +6,28 @@ namespace project.presentation_layer
 {
     class ConsoleUserInterface : IUserInterface
     {
+        string CreateNewNoteName()
+        {
+            Console.Clear();
+
+            string result = "";
+
+
+
+            return result;
+        }
+
+        public string[] CreateNote()
+        {
+            Console.Clear();
+
+            string[] result = new string[2];
+
+
+
+            return result;
+        }
+
         public void ViewNote(string noteName, string note)
         {
             Console.Clear();
