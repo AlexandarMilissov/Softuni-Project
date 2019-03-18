@@ -6,24 +6,45 @@ namespace project.presentation_layer
 {
     class ConsoleUserInterface : IUserInterface
     {
-        string CreateNewNoteName()
+        private string CreateNewNoteName()
         {
             Console.Clear();
 
-            string result = "";
+            Console.WriteLine("Note name:\n");
+            string result = Console.ReadLine();
+            return result;
+        }
+       private List<string> CreateNewNoteText()
+        {
+            Console.Clear();
 
+            List<string> result = new List<string>();
 
+            Console.WriteLine("Note Text, write ^%$*% to end:\n");
+
+            while(true)
+            {
+                if(result[result.Count-1].ToLower() == "^%$*%")
+                {
+                    break;
+                }
+                result.Add(Console.ReadLine());
+            }
+            result.RemoveAt(result.Count-1);
 
             return result;
         }
 
-        public string[] CreateNote()
+        public List<string> CreateNote()
         {
             Console.Clear();
 
-            string[] result = new string[2];
+            string noteName = CreateNewNoteName();
+            List<string> result = CreateNewNoteText();
 
-
+            result.Reverse();
+            result.Add(noteName);
+            result.Reverse();
 
             return result;
         }
@@ -50,7 +71,7 @@ namespace project.presentation_layer
             return answer;
         }
 
-        void IUserInterface.ErrorMessage(string message)
+        public void ErrorMessage(string message)
         {
             Console.Clear();
             Console.Write(message + "\n" +
@@ -58,7 +79,7 @@ namespace project.presentation_layer
             Console.Read();
         }
 
-        string IUserInterface.SelectFunction()
+        public string SelectFunction()
         {
             Console.Clear();
             Console.Write("What do you want to do?:\n" +
