@@ -76,7 +76,7 @@ namespace project.presentation_layer
             Console.Clear();
             Console.Write(message + "\n" +
                           "Press any key to continue");
-            Console.Read();
+            Console.ReadLine();
         }
 
         public string SelectFunction()
