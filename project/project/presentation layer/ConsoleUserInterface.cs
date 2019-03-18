@@ -4,9 +4,9 @@ using System.Text;
 
 namespace project.presentation_layer
 {
-    class ConsoleUserInterface : IUserInterface
+    public class ConsoleUserInterface : IUserInterface
     {
-        string CreateNewNoteName()
+        public string CreateNewNoteName()
         {
             Console.Clear();
 
@@ -50,7 +50,7 @@ namespace project.presentation_layer
             return answer;
         }
 
-        void IUserInterface.ErrorMessage(string message)
+        public void ErrorMessage(string message)
         {
             Console.Clear();
             Console.Write(message + "\n" +
@@ -58,7 +58,7 @@ namespace project.presentation_layer
             Console.Read();
         }
 
-        string IUserInterface.SelectFunction()
+        public string SelectFunction()
         {
             Console.Clear();
             Console.Write("What do you want to do?:\n" +
