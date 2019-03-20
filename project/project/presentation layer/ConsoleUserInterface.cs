@@ -11,7 +11,6 @@ namespace project.presentation_layer
             Console.Clear();
 
             Console.Write("Note name: ");
-            //Console.Read();
             string result = Console.ReadLine();
             return result;
         }
