@@ -10,7 +10,8 @@ namespace project.presentation_layer
         {
             Console.Clear();
 
-            Console.WriteLine("Note name:\n");
+            Console.Write("Note name: ");
+            //Console.Read();
             string result = Console.ReadLine();
             return result;
         }
@@ -24,11 +25,11 @@ namespace project.presentation_layer
 
             while(true)
             {
-                if(result[result.Count-1].ToLower() == "^%$*%")
+                result.Add(Console.ReadLine());
+                if (result[result.Count-1].ToLower() == "^%$*%")
                 {
                     break;
                 }
-                result.Add(Console.ReadLine());
             }
             result.RemoveAt(result.Count-1);
 
@@ -87,6 +88,7 @@ namespace project.presentation_layer
                           "2.Read note\n" +
                           "3.Update note\n" +
                           "4.Delete note\n" +
+                          "5.Exit the program\n" +
                           "Please write the number of the funtion you want to use and press 'Enter'\n");
             string answer = Console.ReadLine();
             return answer;
