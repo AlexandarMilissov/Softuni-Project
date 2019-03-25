@@ -12,7 +12,7 @@ namespace project.engine_layer
         public Controller()
         {
             string selection = userInterface.SelectFunction();
-            while(selection!="5")
+            while (selection!="5")
             {
                 if (int.Parse(selection) < 1 || int.Parse(selection) > 5)
                 {
