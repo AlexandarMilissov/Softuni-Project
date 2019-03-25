@@ -12,9 +12,12 @@ namespace project.engine_layer
         public Controller()
         {
             string selection = userInterface.SelectFunction();
-            while(selection!="5")
+            while (selection!="5")
             {
-                if (int.Parse(selection) < 1 || int.Parse(selection) > 5) userInterface.ErrorMessage("Invalid number entered. Please enter a number between 1 and 5 included.");
+                if (int.Parse(selection) < 1 || int.Parse(selection) > 5)
+                {
+                    userInterface.ErrorMessage("Invalid number entered. Please enter a number between 1 and 5 included.");
+                }
                 switch (selection)
                 {
                     case "1":
