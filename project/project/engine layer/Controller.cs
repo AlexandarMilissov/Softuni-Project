@@ -44,13 +44,13 @@ namespace project.engine_layer
         private void CreateNote()
         {
             IUserInterface show_view = new ConsoleUserInterface();
-            List<string> NoteContents = show_view.CreateNote();
-            Note newNote = new Note(NoteContents[0], NoteContents[1]);
+            Note newNote = show_view.CreateNote();
+            PrintNote(newNote);
         }
         private void PrintNote(Note note)
         {
             IUserInterface show_view = new ConsoleUserInterface();
-            show_view.ViewNote(note.Title, note.Description);
+            show_view.ViewNote(note);
         }
     }
 }
