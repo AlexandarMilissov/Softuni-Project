@@ -11,7 +11,7 @@ namespace project.presentation_layer
         {
             Console.Clear();
 
-            Console.Write("Note name: ");
+            Console.Write("Note name: \n");
             string result = Console.ReadLine();
             return result;
         }
@@ -22,7 +22,8 @@ namespace project.presentation_layer
             List<string> result = new List<string>();
             string exitKey = ":wq";
 
-            Console.WriteLine($"Note Text, write {exitKey} to end:\n");
+            Console.WriteLine($"Note Description \n" +
+                              $"(Write '{exitKey}' on the next row to end the note):\n");
 
             while(true)
             {
@@ -51,7 +52,7 @@ namespace project.presentation_layer
             string noteName = CreateNewNoteName();
             string text = CreateNewNoteText();
 
-            Note note = new Note(noteName, text, DateTime.Now);
+            Note note = new Note(noteName, text);
 
             return note;
         }
