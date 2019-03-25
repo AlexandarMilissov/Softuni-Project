@@ -4,7 +4,7 @@ using System.Text;
 
 namespace project.Models
 {
-    class Note
+    public class Note
     {
         private string title;
         private string description;
