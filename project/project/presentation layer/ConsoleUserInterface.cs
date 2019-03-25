@@ -63,7 +63,7 @@ namespace project.presentation_layer
             Console.Write(note.Title + "\n\n" +
                           note.Description + "\n\n" +
                           "Press any key to continue");
-            Console.Read();
+            Console.ReadLine();
         }
 
         public string ViewNotesNames(List<string> noteNames)
