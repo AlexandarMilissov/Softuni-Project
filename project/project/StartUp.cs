@@ -6,9 +6,5 @@ namespace project
 {
     class StartUp
     {
-        static void Main(string[] args)
-        {
-            Controller start = new Controller();
-        }
     }
 }
