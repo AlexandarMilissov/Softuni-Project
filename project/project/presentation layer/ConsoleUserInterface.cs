@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using project.Models;
 
 namespace project.presentation_layer
 {
@@ -14,39 +15,45 @@ namespace project.presentation_layer
             string result = Console.ReadLine();
             return result;
         }
-       private List<string> CreateNewNoteText()
+        private string CreateNewNoteText()
         {
             Console.Clear();
 
             List<string> result = new List<string>();
+            string exitKey = ":wq";
 
-            Console.WriteLine("Note Text, write ^%$*% to end:\n");
+            Console.WriteLine($"Note Text, write {exitKey} to end:\n");
 
             while(true)
             {
                 result.Add(Console.ReadLine());
-                if (result[result.Count-1].ToLower() == "^%$*%")
+                if (result[result.Count-1] == exitKey)
                 {
                     break;
                 }
             }
             result.RemoveAt(result.Count-1);
 
-            return result;
+            string text = "";
+            foreach (var s in result)
+            {
+                text += s;
+                text += "/n";
+            }
+
+            return text;
         }
 
-        public List<string> CreateNote()
+        public Note CreateNote()
         {
             Console.Clear();
 
             string noteName = CreateNewNoteName();
-            List<string> result = CreateNewNoteText();
+            string text = CreateNewNoteText();
 
-            result.Reverse();
-            result.Add(noteName);
-            result.Reverse();
+            Note note = new Note(noteName, text, DateTime.Now);
 
-            return result;
+            return note;
         }
 
         public void ViewNote(string noteName, string note)
