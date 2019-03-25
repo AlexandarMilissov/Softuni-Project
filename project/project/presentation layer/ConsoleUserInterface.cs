@@ -39,9 +39,9 @@ namespace project.presentation_layer
             foreach (var s in result)
             {
                 text += s;
-                text += "/n";
+                text += "\n";
             }
-
+            
             return text;
         }
 
@@ -63,7 +63,7 @@ namespace project.presentation_layer
             Console.Write(note.Title + "\n\n" +
                           note.Description + "\n\n" +
                           "Press any key to continue");
-
+            Console.Read();
         }
 
         public string ViewNotesNames(List<string> noteNames)
