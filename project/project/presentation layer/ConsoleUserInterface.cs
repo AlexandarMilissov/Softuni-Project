@@ -56,11 +56,11 @@ namespace project.presentation_layer
             return note;
         }
 
-        public void ViewNote(string noteName, string note)
+        public void ViewNote(Note note)
         {
             Console.Clear();
-            Console.Write(noteName + "\n\n" +
-                          note + "\n\n" +
+            Console.Write(note.Title + "\n\n" +
+                          note.Description + "\n\n" +
                           "Press any key to continue");
 
         }

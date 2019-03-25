@@ -10,7 +10,7 @@ namespace project.presentation_layer
     {
         string SelectFunction();
         void ErrorMessage(string message);
-        void ViewNote(string noteName, string note);
+        void ViewNote(Note note);
         string ViewNotesNames(List<string> noteNames);
         Note CreateNote();
     }
