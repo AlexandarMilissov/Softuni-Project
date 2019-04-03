@@ -91,6 +91,19 @@ namespace project.database_layer
             }
         }
 
-        
+        public void UpdateNote(Note note)
+        {
+            using (var connection = Connection.GetConnection())
+            {
+                var command = new SqlCommand("UPDATE Note SET Title=@title, Description=@description WHERE Id=@id", connection);
+                command.Parameters.AddWithValue("id", note.Id);
+                command.Parameters.AddWithValue("title", note.Title);
+                command.Parameters.AddWithValue("description", note.Description);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
     }
 }
