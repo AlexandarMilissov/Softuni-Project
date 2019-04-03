@@ -15,7 +15,7 @@ namespace project.Models
 
         }
 
-        public Note(int id,string title, string description, DateTime checkpoint)
+        public Note(int id,string title, string description)
         {
             this.Id = id;
             this.Title = title;
