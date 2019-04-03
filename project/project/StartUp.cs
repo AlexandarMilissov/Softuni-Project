@@ -8,8 +8,8 @@ namespace project
     {
         public static void Main(string[] args)
         {   
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.ForegroundColor = ConsoleColor.Green;
+            /*Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Green;*/
             Controller start = new Controller();
         }
     }

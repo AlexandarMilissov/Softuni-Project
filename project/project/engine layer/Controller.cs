@@ -45,7 +45,10 @@ namespace project.engine_layer
         }
         private void UpdateNote()
         {
-
+            int note_id = ListNotes();
+            Note newNote = userInterface.CreateNote();
+            newNote.Id = note_id;
+            databaseFunctions.UpdateNote(newNote);
         }
         private void CreateNote()
         {
