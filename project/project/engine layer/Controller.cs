@@ -10,15 +10,83 @@ namespace project.engine_layer
     class Controller
     {
         private IUserInterface userInterface = new ConsoleUserInterface();
-        private NoteData databaseFunctions = new NoteData();
+        private NoteData noteDatabaseFunctions = new NoteData();
+        private UserData userDatabaseFunctions = new UserData();
         public Controller()
         {
-            string selection = userInterface.SelectFunction();
-            while (selection!="5")
+            FirstMenu();
+        }
+        private void DeleteNote()
+        {
+            int note_num = ListNotes();
+            if(note_num==-1)
             {
-                if (int.Parse(selection) < 1 || int.Parse(selection) > 5)
+                return;
+            }
+            noteDatabaseFunctions.DeleteNote(note_num);
+        }
+        private void UpdateNote()
+        {
+            int note_id = ListNotes();
+            if(note_id == -1)
+            {
+                return;
+            }
+            Note newNote = userInterface.CreateNote();
+            newNote.Id = note_id;
+            noteDatabaseFunctions.UpdateNote(newNote);
+        }
+        private void CreateNote()
+        {
+            Note newNote = userInterface.CreateNote();
+            noteDatabaseFunctions.MakeNewNote(newNote);
+        }
+        private void PrintNote()
+        {
+            int note_num = ListNotes();
+            if(note_num==-1)
+            {
+                return;
+            }
+            userInterface.ViewNote(noteDatabaseFunctions.ShowSpecificNote(note_num));
+        }
+        private int ListNotes()
+        {
+            var available_notes = noteDatabaseFunctions.ShowAll();
+            if(available_notes.Count==0)
+            {
+                userInterface.ErrorMessage("Cannot find any previously saved notes.");
+                return -1;
+            }
+            List<string> titles = new List<string>();
+            foreach (var item in available_notes)
+            {
+                titles.Add(item.Title);
+            }
+            int note_num = int.Parse(userInterface.ViewNotesNames(titles));
+            while (note_num < 1 || note_num > noteDatabaseFunctions.ShowAll().Count)
+            {
+                userInterface.ErrorMessage("No note with such ID exists in the database.");
+                note_num = ListNotes();
+            }
+            string note_name = titles[note_num-1];
+            foreach(var item in available_notes)
+            {
+                if(item.Title==note_name)
                 {
-                    userInterface.ErrorMessage("Invalid number entered. Please enter a number between 1 and 5 included.");
+                    note_num = item.Id;
+                }
+            }
+            return note_num;
+        }
+        private void SecondMenu()
+        {
+            string selection = userInterface.SelectFunction();
+            while (selection != "6")
+            {
+                if (int.Parse(selection) < 1 || int.Parse(selection) > 6)
+                {
+                    userInterface.ErrorMessage("Invalid number entered. Please enter a number between 1 and 6 included.");
                 }
                 switch (selection)
                 {
@@ -34,55 +102,45 @@ namespace project.engine_layer
                     case "4":
                         DeleteNote();
                         break;
+                    case "5":
+                        FirstMenu();
+                        break;
                 }
                 selection = userInterface.SelectFunction();
             }
         }
-        private void DeleteNote()
+        private void FirstMenu()
         {
-            int note_num = ListNotes();
-            databaseFunctions.DeleteNote(note_num);
-        }
-        private void UpdateNote()
-        {
-            int note_id = ListNotes();
-            Note newNote = userInterface.CreateNote();
-            newNote.Id = note_id;
-            databaseFunctions.UpdateNote(newNote);
-        }
-        private void CreateNote()
-        {
-            Note newNote = userInterface.CreateNote();
-            databaseFunctions.MakeNewNote(newNote);
-        }
-        private void PrintNote()
-        {
-            int note_num = ListNotes();
-            userInterface.ViewNote(databaseFunctions.ShowSpecificNote(note_num));
-        }
-        private int ListNotes()
-        {
-            var available_notes = databaseFunctions.ShowAll();
-            List<string> titles = new List<string>();
-            foreach (var item in available_notes)
+            int selection = int.Parse(userInterface.StartUpMenu());
+            while (selection < 1 || selection > 2)
             {
-                titles.Add(item.Title);
+                selection = int.Parse(userInterface.StartUpMenu());
             }
-            int note_num = int.Parse(userInterface.ViewNotesNames(titles));
-            while (note_num < 1 || note_num > databaseFunctions.ShowAll().Count)
+            if(selection==1)
             {
-                userInterface.ErrorMessage("No note with such ID exists in the database.");
-                note_num = ListNotes();
-            }
-            string note_name = titles[note_num-1];
-            foreach(var item in available_notes)
-            {
-                if(item.Title==note_name)
+                bool user_exists = false;
+                User logging_user = userInterface.RegisterUser();
+                foreach(var item in userDatabaseFunctions.ShowAll())
                 {
-                    note_num = item.Id;
+                    if(item.Username==logging_user.Username && item.Password==logging_user.Password)
+                    {
+                        SecondMenu();
+                        user_exists = true;
+                        break;
+                    }
+                }
+                if(!user_exists)
+                {
+                    userInterface.ErrorMessage("Incorrect username or password.");
+                    FirstMenu();
                 }
             }
-            return note_num;
+            else
+            {
+                User registering_user = userInterface.RegisterUser();
+                userDatabaseFunctions.RegisterUser(registering_user);
+                SecondMenu();
+            }
         }
     }
 }

@@ -438,8 +438,8 @@ namespace project.presentation_layer
                           "2.Read note\n" +
                           "3.Update note\n" +
                           "4.Delete note\n" +
-                          "5.Exit the program\n" +
-                          "6.Logout\n" +
+                          "5.Logout\n" +
+                          "6.Exit the program\n" +
                           "Please write the number of the function you want to use and press 'Enter'\n");
             string answer = Console.ReadLine();
             return answer;
