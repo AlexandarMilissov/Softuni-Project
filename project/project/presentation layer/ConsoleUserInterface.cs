@@ -39,13 +39,16 @@ namespace project.presentation_layer
                 {
                     case ConsoleKey.Backspace:
                         {
-                            if(posX==0 && text[posY].Length != 0)
+                            if(posX == 0 && posY ==0)
                             {
-                                posY--;
-                                text[posY] += text[posY++];
+                                break;
                             }
-                            if(posX == 0)
+                            if (posX == 0)
                             {
+                                if (text[posY].Length != 0)
+                                {
+                                    text[posY - 1] += text[posY];
+                                }
                                 text.RemoveAt(posY);
                                 posY--;
                                 posX = text[posY].Length;
@@ -82,7 +85,26 @@ namespace project.presentation_layer
                         }
                     case ConsoleKey.Delete:
                         {
-                            //todo
+                            if(posY == text.Count - 1 && posX == text[text.Count - 1].Length)
+                            {
+                                Console.Write(PrintText(text));
+                                Console.SetCursorPosition(posX, posY);
+                                break;
+                            }
+                            if (posX == text[posY].Length)
+                            {
+                                if (text[posY].Length != 0)
+                                {
+                                    text[posY] += text[posY+1];
+                                }
+                                text.RemoveAt(posY+1);
+                            }
+                            else
+                            {
+                                text[posY] = text[posY].Remove(posX, 1);
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
                             break;
                         }
                     case ConsoleKey.LeftArrow:
