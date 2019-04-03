@@ -40,11 +40,12 @@ namespace project.database_layer
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("INSERT INTO Note(Title, Description)" +
-                "VALUES(@title, @description);", connection);
+                var command = new SqlCommand("INSERT INTO Note(Title, Description,UserID)" +
+                "VALUES(@title, @description,@userid);", connection);
 
                 command.Parameters.AddWithValue("title", note.Title);
                 command.Parameters.AddWithValue("description", note.Description);
+                command.Parameters.AddWithValue("userid", note.UserID);
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
