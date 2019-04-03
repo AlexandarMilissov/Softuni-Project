@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using project.presentation_layer;
 using project.Models;
 using project.database_layer;
@@ -54,7 +55,7 @@ namespace project.engine_layer
         }
         private int ListNotes()
         {
-            var available_notes = noteDatabaseFunctions.ShowAll();
+            var available_notes = noteDatabaseFunctions.ShowAll().Where(x => x.UserID == currentUser.UserId).ToList();
             if(available_notes.Count==0)
             {
                 userInterface.ErrorMessage("Cannot find any previously saved notes.");
