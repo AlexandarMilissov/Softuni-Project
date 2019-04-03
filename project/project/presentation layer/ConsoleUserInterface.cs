@@ -175,6 +175,34 @@ namespace project.presentation_layer
                             Console.SetCursorPosition(posX, posY);
                             break;
                         }
+                    case ConsoleKey.Home:
+                        {
+                            posX = 0;
+                            break;
+                        }
+                    case ConsoleKey.End:
+                        {
+                            posX = text[posY].Length;
+                            break;
+                        }
+                    case ConsoleKey.PageDown:
+                        {
+                            posY = text.Count - 1;
+                            if(posX > text[posY].Length)
+                            {
+                                posX = text[posY].Length;
+                            }
+                            break;
+                        }
+                    case ConsoleKey.PageUp:
+                        {
+                            posY = 0;
+                            if (posX > text[posY].Length)
+                            {
+                                posX = text[posY].Length;
+                            }
+                            break;
+                        }
                     default:
                         {
                             text[posY] = text[posY].Insert(posX, keyPressed.KeyChar.ToString());
