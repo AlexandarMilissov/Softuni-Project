@@ -7,7 +7,7 @@ namespace project.Models
     public class Note
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
 
         public Note()
@@ -20,7 +20,6 @@ namespace project.Models
             this.Id = id;
             this.Title = title;
             this.Description = description;
-            this.Checkpoint = checkpoint;
         }
 
         public Note(string title, string description)
