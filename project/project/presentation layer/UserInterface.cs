@@ -8,10 +8,12 @@ namespace project.presentation_layer
 {
     interface IUserInterface
     {
+        string StartUpMenu();
         string SelectFunction();
         void ErrorMessage(string message);
         void ViewNote(Note note);
         string ViewNotesNames(List<string> noteNames);
         Note CreateNote();
+        User RegisterUser();
     }
 }

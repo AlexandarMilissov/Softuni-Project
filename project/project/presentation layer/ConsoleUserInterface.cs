@@ -186,7 +186,7 @@ namespace project.presentation_layer
                 }
             }
         }
-        string PrintText(List<string> text)
+        private string PrintText(List<string> text)
         {
             Console.Clear();
             string result = "";
@@ -208,7 +208,6 @@ namespace project.presentation_layer
 
             return note;
         }
-
         public void ViewNote(Note note)
         {
             Console.Clear();
@@ -217,7 +216,6 @@ namespace project.presentation_layer
                           "Press any key to continue");
             Console.ReadLine();
         }
-
         public string ViewNotesNames(List<string> noteNames)
         {
             int count = 1;
@@ -226,11 +224,10 @@ namespace project.presentation_layer
                 Console.WriteLine(count + ". " + name);
                 count++;
             }
-            Console.Write("Please write the number of the funtion you want to use and press 'Enter'\n");
+            Console.Write("Please write the number of the note you want to use and press 'Enter'\n");
             string answer = Console.ReadLine();
             return answer;
         }
-
         public void ErrorMessage(string message)
         {
             Console.Clear();
@@ -238,7 +235,6 @@ namespace project.presentation_layer
                           "Press any key to continue");
             Console.ReadLine();
         }
-
         public string SelectFunction()
         {
             Console.Clear();
@@ -248,7 +244,31 @@ namespace project.presentation_layer
                           "3.Update note\n" +
                           "4.Delete note\n" +
                           "5.Exit the program\n" +
-                          "Please write the number of the funtion you want to use and press 'Enter'\n");
+                          "6.Logout\n" +
+                          "Please write the number of the function you want to use and press 'Enter'\n");
+            string answer = Console.ReadLine();
+            return answer;
+        }
+
+        public User RegisterUser()
+        {
+            Console.WriteLine("Username:");
+            string username = Console.ReadLine();
+
+            Console.WriteLine("Password:");
+            string passowrd = Console.ReadLine();
+
+            User user = new User(username,passowrd);
+            return user;
+        }
+
+        public string StartUpMenu()
+        {
+            Console.Clear();
+            Console.Write("What do you want to do?:\n" +
+                          "1.Login\n" +
+                          "2.Register new user\n" +
+                          "Please write the number of the function you want to use and press 'Enter'\n");
             string answer = Console.ReadLine();
             return answer;
         }
