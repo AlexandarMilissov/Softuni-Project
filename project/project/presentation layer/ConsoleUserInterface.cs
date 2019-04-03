@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using project.Models;
+using System.Linq;
 
 namespace project.presentation_layer
 {
@@ -14,6 +15,18 @@ namespace project.presentation_layer
             Console.Write("Note name: \n");
             string result = Console.ReadLine();
             return result;
+        }
+        private string CreateNewNoteName(string oldName)
+        {
+            Console.Clear();
+            Console.WriteLine("Press Enter to use the old title or write the new from the begging.");
+            Console.WriteLine(oldName);
+            string answer = Console.ReadLine();
+            if(answer == "")
+            {
+                answer = oldName;
+            }
+            return answer;
         }
         private string CreateNewNoteText()
         {
@@ -186,6 +199,177 @@ namespace project.presentation_layer
                 }
             }
         }
+        private string CreateNewNoteText(string oldDescription)
+        {
+            Console.Clear();
+            Console.WriteLine("Update your note description\n" +
+                              "(Press escape to stop writting)\n" +
+                              "(Press anykey to continue)");
+            Console.ReadKey();
+            Console.Clear();
+
+
+            List<string> text = oldDescription.Split("\n").ToList();
+            int posY = text.Count - 1;
+            int posX = text[posY].Length;
+
+
+            ConsoleKeyInfo keyPressed;
+            while (true)
+            {
+                keyPressed = Console.ReadKey();
+
+                switch (keyPressed.Key)
+                {
+                    case ConsoleKey.Backspace:
+                        {
+                            if (posX == 0 && posY == 0)
+                            {
+                                break;
+                            }
+                            if (posX == 0)
+                            {
+                                if (text[posY].Length != 0)
+                                {
+                                    text[posY - 1] += text[posY];
+                                }
+                                text.RemoveAt(posY);
+                                posY--;
+                                posX = text[posY].Length;
+                            }
+                            else
+                            {
+                                text[posY] = text[posY].Remove(posX - 1, 1);
+                                posX--;
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            continue;
+                        }
+                    case ConsoleKey.Escape:
+                        {
+                            return PrintText(text);
+                        }
+                    case ConsoleKey.Enter:
+                        {
+                            string newRow = "";
+                            if (posX != text[posY].Length)
+                            {
+                                newRow = text[posY].Substring(posX);
+                                text[posY] = text[posY].Remove(posX);
+                            }
+
+                            posY++;
+                            posX = 0;
+                            text.Insert(posY, newRow);
+
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    case ConsoleKey.Delete:
+                        {
+                            if (posY == text.Count - 1 && posX == text[text.Count - 1].Length)
+                            {
+                                Console.Write(PrintText(text));
+                                Console.SetCursorPosition(posX, posY);
+                                break;
+                            }
+                            if (posX == text[posY].Length)
+                            {
+                                if (text[posY].Length != 0)
+                                {
+                                    text[posY] += text[posY + 1];
+                                }
+                                text.RemoveAt(posY + 1);
+                            }
+                            else
+                            {
+                                text[posY] = text[posY].Remove(posX, 1);
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    case ConsoleKey.LeftArrow:
+                        {
+                            posX--;
+                            if (posX < 0)
+                            {
+                                if (posY == 0)
+                                {
+                                    posX = 0;
+                                }
+                                else
+                                {
+                                    posY--;
+                                    posX = text[posY].Length;
+                                }
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    case ConsoleKey.RightArrow:
+                        {
+                            posX++;
+                            if (posX > text[posY].Length)
+                            {
+                                if (posY == text.Count)
+                                {
+                                    posY--;
+                                }
+                                else
+                                {
+                                    posX = 0;
+                                    posY++;
+                                }
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    case ConsoleKey.UpArrow:
+                        {
+                            posY--;
+                            if (posY < 0)
+                            {
+                                posY = 0;
+                            }
+                            else if (posX > text[posY].Length)
+                            {
+                                posX = text[posY].Length;
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    case ConsoleKey.DownArrow:
+                        {
+                            posY++;
+                            if (posY > text.Count - 1)
+                            {
+                                posY = text.Count - 1;
+                            }
+                            else if (posX > text[posY].Length)
+                            {
+                                posX = text[posY].Length;
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    default:
+                        {
+                            text[posY] = text[posY].Insert(posX, keyPressed.KeyChar.ToString());
+                            posX++;
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                }
+            }
+        }
         private string PrintText(List<string> text)
         {
             Console.Clear();
@@ -207,6 +391,17 @@ namespace project.presentation_layer
             Note note = new Note(noteName, text);
 
             return note;
+        }
+        public Note CreateNote(Note note)
+        {
+            Console.Clear();
+
+            string noteName = CreateNewNoteName(note.Title);
+            string text = CreateNewNoteText(note.Description);
+
+            Note updatedNote = new Note(noteName, text);
+
+            return updatedNote;
         }
         public void ViewNote(Note note)
         {
@@ -249,7 +444,6 @@ namespace project.presentation_layer
             string answer = Console.ReadLine();
             return answer;
         }
-
         public User RegisterUser()
         {
             Console.WriteLine("Username:");
@@ -261,7 +455,6 @@ namespace project.presentation_layer
             User user = new User(username,passowrd);
             return user;
         }
-
         public string StartUpMenu()
         {
             Console.Clear();
