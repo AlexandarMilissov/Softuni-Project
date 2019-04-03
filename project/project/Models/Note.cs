@@ -6,25 +6,27 @@ namespace project.Models
 {
     public class Note
     {
-        private string title;
-        private string description;
-        private DateTime checkpoint;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
-        public string Title { get => title; }
-        public string Description { get => description; }
-        public DateTime Checkpoint { get => checkpoint; }
-
-        public Note(string title, string description, DateTime checkpoint)
+        public Note()
         {
-            this.title = title;
-            this.description = description;
-            this.checkpoint = checkpoint;
+
         }
+
+        public Note(int id,string title, string description, DateTime checkpoint)
+        {
+            this.Id = id;
+            this.Title = title;
+            this.Description = description;
+            this.Checkpoint = checkpoint;
+        }
+
         public Note(string title, string description)
         {
-            this.title = title;
-            this.description = description;
-        }
-        
+            this.Title = title;
+            this.Description = description;
+        }    
     }
 }

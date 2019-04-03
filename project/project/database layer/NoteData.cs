@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
+using project.Models;
 
 namespace project.database_layer
 {
@@ -22,6 +24,7 @@ namespace project.database_layer
                             reader.GetInt32(0),
                             reader.GetString(1),
                             reader.GetString(2)
+                            //reader.GetString(3)
                         );
 
                         NoteList.Add(product);
@@ -39,11 +42,11 @@ namespace project.database_layer
             using (var connection = ConnectionDB.GetConnection())
             {
                 var command = new SqlCommand("SET IDENTITY_INSERT Note ON " +
-                "INSERT INTO Note(Id, Name, Description)" +
-                "VALUES(@id, @name, @description);", connection);
+                "INSERT INTO Note(Id, Title, Description)" +
+                "VALUES(@id, @title, @description);", connection);
 
                 command.Parameters.AddWithValue("id", note.Id);
-                command.Parameters.AddWithValue("name", note.Name);
+                command.Parameters.AddWithValue("title", note.Name);
                 command.Parameters.AddWithValue("description", note.Description);
                 connection.Open();
                 command.ExecuteNonQuery();
