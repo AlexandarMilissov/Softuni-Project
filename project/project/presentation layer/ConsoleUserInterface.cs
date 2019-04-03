@@ -19,23 +19,182 @@ namespace project.presentation_layer
         {
             Console.Clear();
             Console.WriteLine("Note Description\n" +
-                              "(Press escape to stop writting)");
-            string text = "";
+                              "(Press escape to stop writting)\n"+
+                              "(Press anykey to continue)");
+            Console.ReadKey();
+            Console.Clear();
+
+
+            List<string> text = new List<string>();
+            text.Add("");
+            int posX = 0;
+            int posY = 0;
+
             ConsoleKeyInfo keyPressed;
             while (true)
             {
                 keyPressed = Console.ReadKey();
-                if(keyPressed.Key == ConsoleKey.Escape)
+
+                switch (keyPressed.Key)
                 {
-                    break;
+                    case ConsoleKey.Backspace:
+                        {
+                            if(posX == 0 && posY ==0)
+                            {
+                                break;
+                            }
+                            if (posX == 0)
+                            {
+                                if (text[posY].Length != 0)
+                                {
+                                    text[posY - 1] += text[posY];
+                                }
+                                text.RemoveAt(posY);
+                                posY--;
+                                posX = text[posY].Length;
+                            }
+                            else
+                            {
+                                text[posY] = text[posY].Remove(posX - 1, 1);
+                                posX--;
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            continue;
+                        }
+                    case ConsoleKey.Escape:
+                        {
+                            return PrintText(text);
+                        }
+                    case ConsoleKey.Enter:
+                        {
+                            string newRow = "";
+                            if(posX != text[posY].Length)
+                            {
+                                newRow = text[posY].Substring(posX);
+                                text[posY] = text[posY].Remove(posX);
+                            }
+
+                            posY++;
+                            posX = 0;
+                            text.Insert(posY,newRow);
+
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    case ConsoleKey.Delete:
+                        {
+                            if(posY == text.Count - 1 && posX == text[text.Count - 1].Length)
+                            {
+                                Console.Write(PrintText(text));
+                                Console.SetCursorPosition(posX, posY);
+                                break;
+                            }
+                            if (posX == text[posY].Length)
+                            {
+                                if (text[posY].Length != 0)
+                                {
+                                    text[posY] += text[posY+1];
+                                }
+                                text.RemoveAt(posY+1);
+                            }
+                            else
+                            {
+                                text[posY] = text[posY].Remove(posX, 1);
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    case ConsoleKey.LeftArrow:
+                        {
+                            posX--;
+                            if(posX<0)
+                            {
+                                if (posY == 0)
+                                {
+                                    posX = 0;
+                                }
+                                else
+                                {
+                                    posY--;
+                                    posX = text[posY].Length;
+                                }
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX,posY);
+                            break;
+                        }
+                    case ConsoleKey.RightArrow:
+                        {
+                            posX++;
+                            if(posX>text[posY].Length)
+                            {
+                                if(posY == text.Count)
+                                {
+                                    posY--;
+                                }
+                                else
+                                {
+                                    posX = 0;
+                                    posY++;
+                                }
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    case ConsoleKey.UpArrow:
+                        {
+                            posY--;
+                            if(posY < 0)
+                            {
+                                posY = 0;
+                            }
+                            else if (posX > text[posY].Length)
+                            {
+                                posX = text[posY].Length;
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    case ConsoleKey.DownArrow:
+                        {
+                            posY++;
+                            if(posY > text.Count - 1)
+                            {
+                                posY = text.Count - 1;
+                            }
+                            else if (posX > text[posY].Length)
+                            {
+                                posX = text[posY].Length;
+                            }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
+                    default:
+                        {
+                            text[posY] = text[posY].Insert(posX, keyPressed.KeyChar.ToString());
+                            posX++;
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
+                            break;
+                        }
                 }
-                if(keyPressed.Key == ConsoleKey.Enter)
-                {
-                    Console.WriteLine();
-                }
-                text += keyPressed.KeyChar;
             }
-            return text;
+        }
+        string PrintText(List<string> text)
+        {
+            Console.Clear();
+            string result = "";
+            foreach (string s in text)
+            {
+                result += s + "\n";
+            }
+            return result;
         }
 
         public Note CreateNote()
