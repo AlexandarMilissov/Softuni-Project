@@ -8,7 +8,6 @@ namespace project.database_layer
 {
     class NoteData
     {
-        //Method used for Displaying all notes in the DB
         public List<Note> ShowAll()
         {
             var NoteList = new List<Note>();
@@ -23,8 +22,8 @@ namespace project.database_layer
                         var product = new Note(
                             reader.GetInt32(0),
                             reader.GetString(1),
-                            reader.GetString(2)
-                            //reader.GetString(3)
+                            reader.GetString(2),
+                            reader.GetInt32(3)
                         );
 
                         NoteList.Add(product);
@@ -50,7 +49,6 @@ namespace project.database_layer
                 command.ExecuteNonQuery();
                 connection.Close();
             }
-
         }
 
         public Note ShowSpecificNote(int id)
@@ -69,7 +67,8 @@ namespace project.database_layer
                         note = new Note(
                         reader.GetInt32(0),
                         reader.GetString(1),
-                        reader.GetString(2)
+                        reader.GetString(2),
+                        reader.GetInt32(3)
                         );
                     }
                 }
