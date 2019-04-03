@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using project.Models;
+using System.Data.SqlClient;
 
 namespace project.database_layer
 {
