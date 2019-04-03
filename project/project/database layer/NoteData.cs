@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
@@ -12,7 +12,7 @@ namespace project.database_layer
         public List<Note> ShowAll()
         {
             var NoteList = new List<Note>();
-            using (var connection = ConnectionDB.GetConnection())
+            using (var connection = Connection.GetConnection())
             {
                 var command = new SqlCommand("SELECT * FROM NOTE", connection);
                 connection.Open();
@@ -39,14 +39,14 @@ namespace project.database_layer
         //Method used for creating new note.
         public void MakeNewNote(Note note)
         {
-            using (var connection = ConnectionDB.GetConnection())
+            using (var connection = Connection.GetConnection())
             {
                 var command = new SqlCommand("SET IDENTITY_INSERT Note ON " +
                 "INSERT INTO Note(Id, Title, Description)" +
                 "VALUES(@id, @title, @description);", connection);
 
                 command.Parameters.AddWithValue("id", note.Id);
-                command.Parameters.AddWithValue("title", note.Name);
+                command.Parameters.AddWithValue("title", note.Title);
                 command.Parameters.AddWithValue("description", note.Description);
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -58,7 +58,7 @@ namespace project.database_layer
         public Note ShowSpecificNote(int id)
         {
             Note note = null;
-            using (var connection = ConnectionDB.GetConnection())
+            using (var connection = Connection.GetConnection())
             {
                 var command = new SqlCommand("SELECT * FROM Note WHERE Id = @id", connection);
                 command.Parameters.AddWithValue("id", id);
@@ -83,7 +83,7 @@ namespace project.database_layer
 
         public void DeleteNote(int id)
         {
-            using (var connection = ConnectionDB.GetConnection())
+            using (var connection = Connection.GetConnection())
             {
                 var command = new SqlCommand("DELETE note FROM Note where Id=@id;", connection);
                 command.Parameters.AddWithValue("id", id);
@@ -94,4 +94,3 @@ namespace project.database_layer
         }
     }
 }
-*/
