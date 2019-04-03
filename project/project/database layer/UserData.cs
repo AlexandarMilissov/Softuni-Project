@@ -22,5 +22,30 @@ namespace project.database_layer
                 connection.Close();
             }
         }
+
+        public List<User> ShowAll()
+        {
+            var UserList = new List<User>();
+            using (var connection = Connection.GetConnection())
+            {
+                var command = new SqlCommand("SELECT * FROM Users", connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var product = new User(
+                            reader.GetInt32(0),
+                            reader.GetString(1),
+                            reader.GetString(2)
+                        );
+
+                        UserList.Add(product);
+                    }
+                }
+                connection.Close();
+            }
+            return UserList;
+        }
     }
 }
