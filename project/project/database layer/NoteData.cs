@@ -41,11 +41,9 @@ namespace project.database_layer
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("SET IDENTITY_INSERT Note ON " +
-                "INSERT INTO Note(Id, Title, Description)" +
-                "VALUES(@id, @title, @description);", connection);
+                var command = new SqlCommand("INSERT INTO Note(Title, Description)" +
+                "VALUES(@title, @description);", connection);
 
-                command.Parameters.AddWithValue("id", note.Id);
                 command.Parameters.AddWithValue("title", note.Title);
                 command.Parameters.AddWithValue("description", note.Description);
                 connection.Open();
@@ -92,5 +90,7 @@ namespace project.database_layer
                 connection.Close();
             }
         }
+
+        
     }
 }
