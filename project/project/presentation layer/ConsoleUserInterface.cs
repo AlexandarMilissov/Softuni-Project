@@ -318,7 +318,7 @@ namespace project.presentation_layer
             string answer = Console.ReadLine();
             return answer;
         }
-        public string SelectClour()
+        public string SelectColour()
         {
             Console.Clear();
             Console.WriteLine("Please write the number of the colour you want to use and press 'Enter'");
