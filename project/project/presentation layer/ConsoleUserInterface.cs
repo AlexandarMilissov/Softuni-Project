@@ -18,30 +18,23 @@ namespace project.presentation_layer
         private string CreateNewNoteText()
         {
             Console.Clear();
-
-            List<string> result = new List<string>();
-            string exitKey = ":wq";
-
-            Console.WriteLine($"Note Description \n" +
-                              $"(Write '{exitKey}' on the next row to end the note):\n");
-
-            while(true)
+            Console.WriteLine("Note Description\n" +
+                              "(Press escape to stop writting)");
+            string text = "";
+            ConsoleKeyInfo keyPressed;
+            while (true)
             {
-                result.Add(Console.ReadLine());
-                if (result[result.Count-1] == exitKey)
+                keyPressed = Console.ReadKey();
+                if(keyPressed.Key == ConsoleKey.Escape)
                 {
                     break;
                 }
+                if(keyPressed.Key == ConsoleKey.Enter)
+                {
+                    Console.WriteLine();
+                }
+                text += keyPressed.KeyChar;
             }
-            result.RemoveAt(result.Count-1);
-
-            string text = "";
-            foreach (var s in result)
-            {
-                text += s;
-                text += "\n";
-            }
-            
             return text;
         }
 
