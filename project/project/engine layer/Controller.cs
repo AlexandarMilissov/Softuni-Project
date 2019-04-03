@@ -12,6 +12,7 @@ namespace project.engine_layer
         private IUserInterface userInterface = new ConsoleUserInterface();
         private NoteData noteDatabaseFunctions = new NoteData();
         private UserData userDatabaseFunctions = new UserData();
+        private User currentUser = null;
         public Controller()
         {
             FirstMenu();
@@ -39,6 +40,7 @@ namespace project.engine_layer
         private void CreateNote()
         {
             Note newNote = userInterface.CreateNote();
+            newNote.UserID = currentUser.UserId;
             noteDatabaseFunctions.MakeNewNote(newNote);
         }
         private void PrintNote()
@@ -124,6 +126,7 @@ namespace project.engine_layer
                 {
                     if(item.Username==logging_user.Username && item.Password==logging_user.Password)
                     {
+                        currentUser = item;
                         SecondMenu();
                         user_exists = true;
                         break;
