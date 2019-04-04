@@ -23,5 +23,29 @@ namespace project.database_layer
                 connection.Close();
             }
         }
+
+        public List<Configuration> ShowAll()
+        {
+            var NoteList = new List<Configuration>();
+            using (var connection = Connection.GetConnection())
+            {
+                var command = new SqlCommand("SELECT * FROM Notes", connection);
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var product = new Configuration(
+                            reader.GetInt32(0)
+                        );
+
+                        NoteList.Add(product);
+                    }
+                }
+                connection.Close();
+
+                return NoteList;
+            }
+        }
     }
 }
