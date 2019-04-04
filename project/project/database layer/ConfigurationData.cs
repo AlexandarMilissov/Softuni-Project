@@ -12,10 +12,8 @@ namespace project.database_layer
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("INSERT INTO Configurations(ConfigId, TextColor,BackgroundColor)" +
-                "VALUES(@configid, @textcolor,@bgcolor);", connection);
-
-                command.Parameters.AddWithValue("configid", configuration.Id);
+                var command = new SqlCommand("INSERT INTO Configurations(TextColor,BackgroundColor)" +
+                "VALUES(@textcolor,@bgcolor);", connection);
                 command.Parameters.AddWithValue("textcolor", configuration.TextColour);
                 command.Parameters.AddWithValue("bgcolor", configuration.BackgroundColour);
                 connection.Open();
