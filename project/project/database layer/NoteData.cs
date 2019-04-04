@@ -57,7 +57,7 @@ namespace project.database_layer
             Note note = null;
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("SELECT * FROM Note WHERE Id = @id", connection);
+                var command = new SqlCommand("SELECT * FROM Note WHERE NoteId = @id", connection);
                 command.Parameters.AddWithValue("id", id);
 
                 connection.Open();
@@ -83,7 +83,7 @@ namespace project.database_layer
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("DELETE note FROM Note where Id=@id;", connection);
+                var command = new SqlCommand("DELETE note FROM Note where NoteId=@id;", connection);
                 command.Parameters.AddWithValue("id", id);
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -95,8 +95,8 @@ namespace project.database_layer
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("UPDATE Note SET Title=@title, Description=@description WHERE Id=@id", connection);
-                command.Parameters.AddWithValue("id", note.Id);
+                var command = new SqlCommand("UPDATE Note SET Title=@title, Description=@description WHERE NoteId=@id", connection);
+                command.Parameters.AddWithValue("id", note.NoteId);
                 command.Parameters.AddWithValue("title", note.Title);
                 command.Parameters.AddWithValue("description", note.Description);
 
