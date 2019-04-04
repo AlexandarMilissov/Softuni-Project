@@ -37,10 +37,10 @@ namespace project.database_layer
         }
         public List<Configuration> ShowAll()
         {
-            var NoteList = new List<Configuration>();
+            var ConfigList = new List<Configuration>();
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("SELECT * FROM Notes", connection);
+                var command = new SqlCommand("SELECT * FROM Configurations", connection);
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
@@ -52,12 +52,12 @@ namespace project.database_layer
                             (ConsoleColor)reader.GetInt32(2)
                         );
 
-                        NoteList.Add(product);
+                        ConfigList.Add(product);
                     }
                 }
                 connection.Close();
 
-                return NoteList;
+                return ConfigList;
             }
         }
     }
