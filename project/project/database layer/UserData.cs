@@ -33,7 +33,7 @@ namespace project.database_layer
         /// <summary>
         /// This method used to display every existing user in the Database from the SQL Server.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of all existing users.</returns>
         public List<User> ShowAll()
         {
             var UserList = new List<User>();
