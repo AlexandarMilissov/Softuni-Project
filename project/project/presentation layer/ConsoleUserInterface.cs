@@ -268,7 +268,7 @@ namespace project.presentation_layer
             ConsoleColor BackgroundColor = Console.BackgroundColor;
             ConsoleColor TextColor = Console.ForegroundColor;
 
-            for (int i = 0; i < 17; i++)
+            for (int i = 0; i < Enum.GetNames(typeof(ConsoleColor)).Length; i++)
             {
                 try
                 {
@@ -278,7 +278,7 @@ namespace project.presentation_layer
                 }
                 catch(System.ArgumentException)
                 {
-
+                    i++;
                 }
             }
 
