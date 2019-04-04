@@ -274,7 +274,7 @@ namespace project.presentation_layer
                 {
                     ConsoleColor c = (ConsoleColor)i;
                     Console.ForegroundColor = c;
-                    Console.WriteLine(i + "." + c.ToString());
+                    Console.WriteLine((i+1) + "." + c.ToString());
                 }
                 catch(System.ArgumentException)
                 {
