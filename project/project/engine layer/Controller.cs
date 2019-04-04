@@ -35,7 +35,7 @@ namespace project.engine_layer
                 return;
             }
             Note newNote = userInterface.CreateNote();
-            newNote.Id = note_id;
+            newNote.NoteId = note_id;
             noteDatabaseFunctions.UpdateNote(newNote);
         }
         private void CreateNote()
@@ -77,7 +77,7 @@ namespace project.engine_layer
             {
                 if(item.Title==note_name)
                 {
-                    note_num = item.Id;
+                    note_num = item.NoteId;
                 }
             }
             return note_num;
