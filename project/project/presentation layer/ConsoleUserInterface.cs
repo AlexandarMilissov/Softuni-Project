@@ -268,17 +268,17 @@ namespace project.presentation_layer
             ConsoleColor BackgroundColor = Console.BackgroundColor;
             ConsoleColor TextColor = Console.ForegroundColor;
 
-            for (int i = 0; i < 17; i++)
+            for (int i = 0; i < Enum.GetNames(typeof(ConsoleColor)).Length; i++)
             {
                 try
                 {
                     ConsoleColor c = (ConsoleColor)i;
                     Console.ForegroundColor = c;
-                    Console.WriteLine(i + "." + c.ToString());
+                    Console.WriteLine((i+1) + "." + c.ToString());
                 }
                 catch(System.ArgumentException)
                 {
-
+                    i++;
                 }
             }
 
