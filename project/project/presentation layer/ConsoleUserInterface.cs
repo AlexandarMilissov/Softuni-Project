@@ -207,6 +207,17 @@ namespace project.presentation_layer
                         {
                             text[posY] = text[posY].Insert(posX, keyPressed.KeyChar.ToString());
                             posX++;
+                            if(posX >= Console.BufferWidth - 1)
+                            {
+                                string newRow = "";
+
+                                posY++;
+                                posX = 0;
+                                text.Insert(posY, newRow);
+
+                                Console.Write(PrintText(text));
+                                Console.SetCursorPosition(posX, posY);
+                            }
                             Console.Write(PrintText(text));
                             Console.SetCursorPosition(posX, posY);
                             break;
