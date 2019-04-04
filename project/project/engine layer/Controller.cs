@@ -13,9 +13,12 @@ namespace project.engine_layer
         private IUserInterface userInterface = new ConsoleUserInterface();
         private NoteData noteDatabaseFunctions = new NoteData();
         private UserData userDatabaseFunctions = new UserData();
+        private ConfigurationData configurationDatabaseFunctions = new ConfigurationData();
         private User currentUser = null;
+        private Configuration DefaultConfig = new Configuration();
         public Controller()
         {
+            configurationDatabaseFunctions.MakeNewConfiguration(DefaultConfig);
             StartMenu();
         }
         private void DeleteNote()
@@ -84,40 +87,49 @@ namespace project.engine_layer
         }
         private void OperationsMenu()
         {
-            string selection = userInterface.SelectFunction();
-            while (selection != "6")
+            int selection = 0;
+            Int32.TryParse(userInterface.SelectFunction(), out selection);
+            while(selection == 0 || (selection < 1 || selection > 6))
             {
-                if (int.Parse(selection) < 1 || int.Parse(selection) > 6)
-                {
-                    userInterface.ErrorMessage("Invalid number entered. Please enter a number between 1 and 6 included.");
-                }
+                userInterface.ErrorMessage("Invalid input detected. Please enter a NUMBER between 1 and 7 included.");
+                Int32.TryParse(userInterface.SelectFunction(), out selection);
+            }
+            while (selection != 6)
+            {
                 switch (selection)
                 {
-                    case "1":
+                    case 1:
                         CreateNote();
                         break;
-                    case "2":
+                    case 2:
                         PrintNote();
                         break;
-                    case "3":
+                    case 3:
                         UpdateNote();
                         break;
-                    case "4":
+                    case 4:
                         DeleteNote();
                         break;
-                    case "5":
+                    case 5:
                         StartMenu();
                         break;
                 }
-                selection = userInterface.SelectFunction();
+                Int32.TryParse(userInterface.SelectFunction(), out selection);
+                while (selection == 0 || (selection < 1 || selection > 6))
+                {
+                    userInterface.ErrorMessage("Invalid input detected. Please enter a NUMBER between 1 and 7 included.");
+                    Int32.TryParse(userInterface.SelectFunction(), out selection);
+                }
             }
         }
         private void StartMenu()
         {
-            int selection = int.Parse(userInterface.StartUpMenu());
-            while (selection < 1 || selection > 2)
+            int selection = 0;
+            Int32.TryParse(userInterface.StartUpMenu(), out selection);
+            while (selection == 0 || (selection < 1 || selection > 2))
             {
-                selection = int.Parse(userInterface.StartUpMenu());
+                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 2 included.");
+                Int32.TryParse(userInterface.StartUpMenu(), out selection);
             }
             if(selection==1)
             {
@@ -142,20 +154,33 @@ namespace project.engine_layer
             else
             {
                 User registering_user = userInterface.RegisterUser();
+                registering_user.ConfigurationID = DefaultConfig.Id;
                 userDatabaseFunctions.RegisterUser(registering_user);
+                ConfigurationMenu();
                 OperationsMenu();
             }
         }
         private void ConfigurationMenu()
         {
+            Configuration config = new Configuration();
             int colour_num = 0;
-            Int32.TryParse(userInterface.SelectColour(), out colour_num);
-            while(colour_num == 0 || (colour_num<1 || colour_num>17))
+            Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
+            while (colour_num == 0 || (colour_num <1 || colour_num>17))
             {
-                userInterface.ErrorMessage("Incorrect input detected. Please enter a number from the listed ones.");
-                Int32.TryParse(userInterface.SelectColour(), out colour_num);
+                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 17 included.");
+                Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
             }
-
+            Console.BackgroundColor = (ConsoleColor)colour_num;
+            config.BackgroundColour = (ConsoleColor)colour_num;
+            Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
+            while (colour_num == 0 || (colour_num < 1 || colour_num > 17))
+            {
+                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 17 included.");
+                Int32.TryParse(userInterface.SelectTextColour(), out colour_num);
+            }
+            Console.ForegroundColor = (ConsoleColor)colour_num;
+            config.TextColour = (ConsoleColor)colour_num;
+            configurationDatabaseFunctions.MakeNewConfiguration(config);
         }
     }
 }

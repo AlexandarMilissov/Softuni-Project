@@ -59,19 +59,5 @@ namespace project.database_layer
             }
             return UserList;
         }
-        public void ChangeConfiguration(Configuration config)
-        {
-            using (var connection = Connection.GetConnection())
-            {
-                var command = new SqlCommand("UPDATE Configurations SET TextColor=@textcolor,BackgroundColor=@bgcolor WHERE ConfigId=@configid", connection);
-                command.Parameters.AddWithValue("configid", config.Id);
-                command.Parameters.AddWithValue("textcolor", config.TextColour);
-                command.Parameters.AddWithValue("bgcolor", config.BackgroundColour);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-        }
     }
 }
