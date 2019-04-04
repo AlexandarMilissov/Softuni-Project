@@ -381,6 +381,7 @@ namespace project.presentation_layer
             Console.Write("What do you want to do?:\n" +
                           "1.Login\n" +
                           "2.Register new user\n" +
+                          "3.Exit" +
                           "Please write the number of the function you want to use and press 'Enter'\n");
             string answer = Console.ReadLine();
             return answer;
