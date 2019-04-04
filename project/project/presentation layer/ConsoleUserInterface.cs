@@ -270,8 +270,16 @@ namespace project.presentation_layer
 
             for (int i = 0; i < 17; i++)
             {
-                Console.ForegroundColor = (ConsoleColor)i;
-                Console.WriteLine(i + (ConsoleColor)i);
+                try
+                {
+                    ConsoleColor c = (ConsoleColor)i;
+                    Console.ForegroundColor = c;
+                    Console.WriteLine(i + "." + c.ToString());
+                }
+                catch(System.ArgumentException)
+                {
+
+                }
             }
 
             Console.BackgroundColor = BackgroundColor;
