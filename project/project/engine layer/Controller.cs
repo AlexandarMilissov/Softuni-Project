@@ -15,10 +15,8 @@ namespace project.engine_layer
         private UserData userDatabaseFunctions = new UserData();
         private ConfigurationData configurationDatabaseFunctions = new ConfigurationData();
         private User currentUser = null;
-        //private Configuration DefaultConfig = new Configuration();
         public Controller()
         {
-            //configurationDatabaseFunctions.MakeNewConfiguration(DefaultConfig);
             StartMenu();
         }
         private void DeleteNote()
@@ -69,8 +67,9 @@ namespace project.engine_layer
             {
                 titles.Add(item.Title);
             }
-            int note_num = int.Parse(userInterface.ViewNotesNames(titles));
-            while (note_num < 1 || note_num > noteDatabaseFunctions.ShowAll().Count)
+            int note_num = 0;
+            Int32.TryParse(userInterface.ViewNotesNames(titles), out note_num);
+            while (note_num == 0 || (note_num < 1 || note_num > noteDatabaseFunctions.ShowAll().Count))
             {
                 userInterface.ErrorMessage("No note with such ID exists in the database.");
                 note_num = ListNotes();
@@ -89,12 +88,12 @@ namespace project.engine_layer
         {
             int selection = 0;
             Int32.TryParse(userInterface.SelectFunction(), out selection);
-            while(selection == 0 || (selection < 1 || selection > 6))
+            while(selection == 0 || (selection < 1 || selection > 7))
             {
                 userInterface.ErrorMessage("Invalid input detected. Please enter a NUMBER between 1 and 7 included.");
                 Int32.TryParse(userInterface.SelectFunction(), out selection);
             }
-            while (selection != 6)
+            while (selection != 7)
             {
                 switch (selection)
                 {
@@ -111,11 +110,14 @@ namespace project.engine_layer
                         DeleteNote();
                         break;
                     case 5:
+                        ConfigureColors();
+                        break;
+                    case 6:
                         StartMenu();
                         break;
                 }
                 Int32.TryParse(userInterface.SelectFunction(), out selection);
-                while (selection == 0 || (selection < 1 || selection > 6))
+                while (selection == 0 || (selection < 1 || selection > 7))
                 {
                     userInterface.ErrorMessage("Invalid input detected. Please enter a NUMBER between 1 and 7 included.");
                     Int32.TryParse(userInterface.SelectFunction(), out selection);
@@ -154,13 +156,13 @@ namespace project.engine_layer
             else
             {
                 User registering_user = userInterface.RegisterUser();
-                //registering_user.ConfigurationID = DefaultConfig.Id;
+                registering_user.ConfigurationID = 1;
+                registering_user.ConfigurationID = ConfigurationMenu();
                 userDatabaseFunctions.RegisterUser(registering_user);
-                ConfigurationMenu();
                 OperationsMenu();
             }
         }
-        private void ConfigurationMenu()
+        private int ConfigurationMenu()
         {
             Configuration config = new Configuration();
             int colour_num = 0;
@@ -170,17 +172,22 @@ namespace project.engine_layer
                 userInterface.ErrorMessage("Please enter a NUMBER between 1 and 17 included.");
                 Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
             }
-            Console.BackgroundColor = (ConsoleColor)colour_num;
-            config.BackgroundColour = (ConsoleColor)colour_num;
+            Console.BackgroundColor = (ConsoleColor)colour_num-1;
+            config.BackgroundColour = (ConsoleColor)colour_num-1;
             Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
             while (colour_num == 0 || (colour_num < 1 || colour_num > 17))
             {
                 userInterface.ErrorMessage("Please enter a NUMBER between 1 and 17 included.");
                 Int32.TryParse(userInterface.SelectTextColour(), out colour_num);
             }
-            Console.ForegroundColor = (ConsoleColor)colour_num;
-            config.TextColour = (ConsoleColor)colour_num;
+            Console.ForegroundColor = (ConsoleColor)colour_num-1;
+            config.TextColour = (ConsoleColor)colour_num-1;
             configurationDatabaseFunctions.MakeNewConfiguration(config);
+            return configurationDatabaseFunctions.ShowAll().Last().Id;
+        }
+        private void ConfigureColors()
+        {
+
         }
     }
 }
