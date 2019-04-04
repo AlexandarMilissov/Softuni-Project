@@ -332,7 +332,9 @@ namespace project.presentation_layer
         public void ViewNote(Note note)
         {
             Console.Clear();
-            Console.Write(note.Title + "\n\n" +
+            Console.Write("Title:\n"+
+                          note.Title + "\n\n" +
+                          "Description:\n"+
                           note.Description + "\n\n" +
                           "Press any key to continue");
             Console.ReadLine();
