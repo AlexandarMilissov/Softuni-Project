@@ -20,8 +20,8 @@ namespace project.database_layer
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("INSERT INTO Users(Username, Password, ConfigId)" +
-                "VALUES(@username, @password,@configid);", connection);
+                var command = new SqlCommand("INSERT INTO Users(Username, Password,ConfigId)" +
+                "VALUES(@username, @password, @configid);", connection);
                 command.Parameters.AddWithValue("username", user.Username);
                 command.Parameters.AddWithValue("password", user.Password);
                 command.Parameters.AddWithValue("configid", user.ConfigurationID);
@@ -58,6 +58,20 @@ namespace project.database_layer
                 connection.Close();
             }
             return UserList;
+        }
+        public void ChangeConfiguration(Configuration config)
+        {
+            using (var connection = Connection.GetConnection())
+            {
+                var command = new SqlCommand("UPDATE Configurations SET ConfigId=@configid, TextColor=@textcolor WHERE BackgroundColor=@bgcolor", connection);
+                command.Parameters.AddWithValue("configid", config.Id);
+                command.Parameters.AddWithValue("textcolor", config.TextColour);
+                command.Parameters.AddWithValue("bgcolor", config.BackgroundColour);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
     }
 }
