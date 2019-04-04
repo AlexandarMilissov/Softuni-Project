@@ -16,6 +16,14 @@ namespace project.Models
 
         }
 
+        public User(int userid, string username, string password, int configurationid)
+        {
+            this.Username = username;
+            this.Password = password;
+            this.UserId = userid;
+            this.ConfigurationID = configurationid;
+        }
+
         public User(int userid, string username, string password)
         {
             this.Username = username;
