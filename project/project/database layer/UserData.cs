@@ -7,8 +7,15 @@ using project.Models;
 
 namespace project.database_layer
 {
+    /// <summary>
+    /// The class UserData.
+    /// </summary>
     class UserData
     {
+        /// <summary>
+        /// This method registers new user in the Database from the SQL Server.
+        /// </summary>
+        /// <param name="user"></param>
         public void RegisterUser(User user)
         {
             using (var connection = Connection.GetConnection())
@@ -23,7 +30,10 @@ namespace project.database_layer
                 connection.Close();
             }
         }
-
+        /// <summary>
+        /// This method used to display every existing user in the Database from the SQL Server.
+        /// </summary>
+        /// <returns></returns>
         public List<User> ShowAll()
         {
             var UserList = new List<User>();

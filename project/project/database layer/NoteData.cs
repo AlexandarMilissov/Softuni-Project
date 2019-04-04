@@ -6,14 +6,21 @@ using project.Models;
 
 namespace project.database_layer
 {
+    /// <summary>
+    /// The class NoteData.
+    /// </summary>
     class NoteData
     {
+        /// <summary>
+        /// This method used to display every existing note in the Database from the SQL Server.
+        /// </summary>
+        /// <returns>List of all existing notes.</returns>
         public List<Note> ShowAll()
         {
             var NoteList = new List<Note>();
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("SELECT * FROM NOTE", connection);
+                var command = new SqlCommand("SELECT * FROM Notes", connection);
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
@@ -35,12 +42,15 @@ namespace project.database_layer
                 return NoteList;
             }
         }
-        //Method used for creating new note.
+        /// <summary>
+        /// This method is used for making new note.
+        /// </summary>
+        /// <param name="note">Makes a note that gets parameters from a user.</param>
         public void MakeNewNote(Note note)
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("INSERT INTO Note(Title, Description,UserID)" +
+                var command = new SqlCommand("INSERT INTO Notes(Title, Description,UserID)" +
                 "VALUES(@title, @description,@userid);", connection);
 
                 command.Parameters.AddWithValue("title", note.Title);
@@ -51,13 +61,17 @@ namespace project.database_layer
                 connection.Close();
             }
         }
-
+        /// <summary>
+        /// This method is used for showing a specific note.
+        /// </summary>
+        /// <param name="id"> This parameter is searched in the Notes table.</param>
+        /// <returns></returns>
         public Note ShowSpecificNote(int id)
         {
             Note note = null;
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("SELECT * FROM Note WHERE NoteId = @id", connection);
+                var command = new SqlCommand("SELECT * FROM Notes WHERE NoteId = @id", connection);
                 command.Parameters.AddWithValue("id", id);
 
                 connection.Open();
@@ -78,24 +92,30 @@ namespace project.database_layer
 
             return note;
         }
-
+        /// <summary>
+        /// This method is used for deleting note with a specific id.
+        /// </summary>
+        /// <param name="id">This parameter is searched in the Notes table.</param>
         public void DeleteNote(int id)
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("DELETE note FROM Note where NoteId=@id;", connection);
+                var command = new SqlCommand("DELETE note FROM Notes where NoteId=@id;", connection);
                 command.Parameters.AddWithValue("id", id);
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
             }
         }
-
+        /// <summary>
+        /// This method is used for updating note.
+        /// </summary>
+        /// <param name="note">Gets a note with parameters given by the user.</param>
         public void UpdateNote(Note note)
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("UPDATE Note SET Title=@title, Description=@description WHERE NoteId=@id", connection);
+                var command = new SqlCommand("UPDATE Notes SET Title=@title, Description=@description WHERE NoteId=@id", connection);
                 command.Parameters.AddWithValue("id", note.NoteId);
                 command.Parameters.AddWithValue("title", note.Title);
                 command.Parameters.AddWithValue("description", note.Description);
