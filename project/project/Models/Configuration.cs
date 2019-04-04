@@ -12,5 +12,24 @@ namespace project.Models
         public int Id;
         public ConsoleColor TextColour = ConsoleColor.White;
         public ConsoleColor BackgroundColour = ConsoleColor.Black;
+
+        public Configuration()
+        {
+
+        }
+
+        public Configuration(int id, ConsoleColor textcolor,ConsoleColor backgroundcolor)
+        {
+            this.Id = id;
+            this.TextColour = textcolor;
+            this.BackgroundColour = backgroundcolor;
+        }
+
+        public Configuration(int id)
+        {
+            this.Id = id;
+        }
     }
+
+
 }

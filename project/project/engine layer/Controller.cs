@@ -15,10 +15,10 @@ namespace project.engine_layer
         private UserData userDatabaseFunctions = new UserData();
         private ConfigurationData configurationDatabaseFunctions = new ConfigurationData();
         private User currentUser = null;
-        private Configuration DefaultConfig = new Configuration();
+        //private Configuration DefaultConfig = new Configuration();
         public Controller()
         {
-            configurationDatabaseFunctions.MakeNewConfiguration(DefaultConfig);
+            //configurationDatabaseFunctions.MakeNewConfiguration(DefaultConfig);
             StartMenu();
         }
         private void DeleteNote()
@@ -154,7 +154,7 @@ namespace project.engine_layer
             else
             {
                 User registering_user = userInterface.RegisterUser();
-                registering_user.ConfigurationID = DefaultConfig.Id;
+                //registering_user.ConfigurationID = DefaultConfig.Id;
                 userDatabaseFunctions.RegisterUser(registering_user);
                 ConfigurationMenu();
                 OperationsMenu();
