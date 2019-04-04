@@ -21,7 +21,7 @@ namespace project.database_layer
             using (var connection = Connection.GetConnection())
             {
                 var command = new SqlCommand("INSERT INTO Users(Username, Password,ConfigId)" +
-                "VALUES(@username, @password,configid);", connection);
+                "VALUES(@username, @password, @configid);", connection);
                 command.Parameters.AddWithValue("username", user.Username);
                 command.Parameters.AddWithValue("password", user.Password);
                 command.Parameters.AddWithValue("configid", user.ConfigurationID);

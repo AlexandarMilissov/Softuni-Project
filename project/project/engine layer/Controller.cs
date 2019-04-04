@@ -16,7 +16,7 @@ namespace project.engine_layer
         private User currentUser = null;
         public Controller()
         {
-            FirstMenu();
+            StartMenu();
         }
         private void DeleteNote()
         {
@@ -82,7 +82,7 @@ namespace project.engine_layer
             }
             return note_num;
         }
-        private void SecondMenu()
+        private void OperationsMenu()
         {
             string selection = userInterface.SelectFunction();
             while (selection != "6")
@@ -106,13 +106,13 @@ namespace project.engine_layer
                         DeleteNote();
                         break;
                     case "5":
-                        FirstMenu();
+                        StartMenu();
                         break;
                 }
                 selection = userInterface.SelectFunction();
             }
         }
-        private void FirstMenu()
+        private void StartMenu()
         {
             int selection = int.Parse(userInterface.StartUpMenu());
             while (selection < 1 || selection > 2)
@@ -128,7 +128,7 @@ namespace project.engine_layer
                     if(item.Username==logging_user.Username && item.Password==logging_user.Password)
                     {
                         currentUser = item;
-                        SecondMenu();
+                        OperationsMenu();
                         user_exists = true;
                         break;
                     }
@@ -136,15 +136,26 @@ namespace project.engine_layer
                 if(!user_exists)
                 {
                     userInterface.ErrorMessage("Incorrect username or password.");
-                    FirstMenu();
+                    StartMenu();
                 }
             }
             else
             {
                 User registering_user = userInterface.RegisterUser();
                 userDatabaseFunctions.RegisterUser(registering_user);
-                SecondMenu();
+                OperationsMenu();
             }
+        }
+        private void ConfigurationMenu()
+        {
+            int colour_num = 0;
+            Int32.TryParse(userInterface.SelectColour(), out colour_num);
+            while(colour_num == 0 || (colour_num<1 || colour_num>17))
+            {
+                userInterface.ErrorMessage("Incorrect input detected. Please enter a number from the listed ones.");
+                Int32.TryParse(userInterface.SelectColour(), out colour_num);
+            }
+
         }
     }
 }
