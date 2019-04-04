@@ -265,40 +265,17 @@ namespace project.presentation_layer
             Console.Clear();
             Console.WriteLine("Please write the number of the colour you want to use and press 'Enter'");
             Console.WriteLine(message);
+            ConsoleColor BackgroundColor = Console.BackgroundColor;
+            ConsoleColor TextColor = Console.ForegroundColor;
 
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine("1.Black");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("2.Blue");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("3.Cyan");
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine("5.DarkBlue");
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("6.DarkCyan");
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("7.DarkGray");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("8.DarkGreen");
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("9.DarkMagenta");
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("10.DarkRed");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("11.DarkYellow");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("12.Gray");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("13.Green");
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("14.Magenta");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("15.Red");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("16.White");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("17.Yellow");
+            for (int i = 0; i < 17; i++)
+            {
+                Console.ForegroundColor = (ConsoleColor)i;
+                Console.WriteLine(i + (ConsoleColor)i);
+            }
 
+            Console.BackgroundColor = BackgroundColor;
+            Console.ForegroundColor = TextColor;
             string result = Console.ReadLine();
             return result;
         }
