@@ -15,6 +15,7 @@ namespace project.presentation_layer
         string ViewNotesNames(List<string> noteNames);
         Note CreateNote();
         User RegisterUser();
-        string SelectColour();
+        string SelectBackgroundColour();
+        string SelectTextColour();
     }
 }
