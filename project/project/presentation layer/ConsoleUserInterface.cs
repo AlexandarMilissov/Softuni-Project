@@ -381,10 +381,17 @@ namespace project.presentation_layer
             Console.WriteLine("Username:");
             string username = Console.ReadLine();
 
-            Console.WriteLine("Password:");
-            string passowrd = Console.ReadLine();
+            Console.Write("password:");
+            string password = null;
+            while (true)
+            {
+                var key = System.Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter)
+                    break;
+                password += key.KeyChar;
+            }
 
-            User user = new User(username,passowrd);
+            User user = new User(username,password);
             return user;
         }
         public string StartUpMenu()
