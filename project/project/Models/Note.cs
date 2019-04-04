@@ -6,7 +6,7 @@ namespace project.Models
 {
     public class Note
     {
-        public int Id { get; set; }
+        public int NoteId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int UserID { get; set; }
@@ -18,7 +18,7 @@ namespace project.Models
 
         public Note(int id,string title, string description,int userid)
         {
-            this.Id = id;
+            this.NoteId = id;
             this.Title = title;
             this.Description = description;
             this.UserID = userid;
