@@ -40,7 +40,7 @@ namespace project.database_layer
             var NoteList = new List<Configuration>();
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("SELECT * FROM Notes", connection);
+                var command = new SqlCommand("SELECT * FROM Configurations", connection);
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
