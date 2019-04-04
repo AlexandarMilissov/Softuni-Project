@@ -207,6 +207,17 @@ namespace project.presentation_layer
                         {
                             text[posY] = text[posY].Insert(posX, keyPressed.KeyChar.ToString());
                             posX++;
+                            if(posX >= Console.BufferWidth - 1)
+                            {
+                                string newRow = "";
+
+                                posY++;
+                                posX = 0;
+                                text.Insert(posY, newRow);
+
+                                Console.Write(PrintText(text));
+                                Console.SetCursorPosition(posX, posY);
+                            }
                             Console.Write(PrintText(text));
                             Console.SetCursorPosition(posX, posY);
                             break;
@@ -370,6 +381,7 @@ namespace project.presentation_layer
             Console.Write("What do you want to do?:\n" +
                           "1.Login\n" +
                           "2.Register new user\n" +
+                          "3.Exit" +
                           "Please write the number of the function you want to use and press 'Enter'\n");
             string answer = Console.ReadLine();
             return answer;
