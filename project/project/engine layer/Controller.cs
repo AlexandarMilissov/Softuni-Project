@@ -69,9 +69,9 @@ namespace project.engine_layer
             }
             int note_num = 0;
             Int32.TryParse(userInterface.ViewNotesNames(titles), out note_num);
-            while (note_num == 0 || (note_num < 1 || note_num > noteDatabaseFunctions.ShowAll().Count))
+            while (note_num < 1 || note_num > available_notes.Count)
             {
-                userInterface.ErrorMessage("No note with such ID exists in the database.");
+                userInterface.ErrorMessage("No note with the entered number exists in the database.");
                 note_num = ListNotes();
             }
             string note_name = titles[note_num-1];
@@ -113,6 +113,8 @@ namespace project.engine_layer
                         ConfigureColors();
                         break;
                     case 6:
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.White;
                         StartMenu();
                         break;
                 }
@@ -128,9 +130,9 @@ namespace project.engine_layer
         {
             int selection = 0;
             Int32.TryParse(userInterface.StartUpMenu(), out selection);
-            while (selection == 0 || (selection < 1 || selection > 2))
+            while (selection == 0 || (selection < 1 || selection > 3))
             {
-                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 2 included.");
+                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 3 included.");
                 Int32.TryParse(userInterface.StartUpMenu(), out selection);
             }
             if(selection==1)
@@ -142,6 +144,9 @@ namespace project.engine_layer
                     if(item.Username==logging_user.Username && item.Password==logging_user.Password)
                     {
                         currentUser = item;
+                        Configuration config = configurationDatabaseFunctions.ShowAll().Where(x => x.Id == item.ConfigurationID).First();
+                        Console.BackgroundColor = config.BackgroundColour;
+                        Console.ForegroundColor = config.TextColour;
                         OperationsMenu();
                         user_exists = true;
                         break;
@@ -153,13 +158,17 @@ namespace project.engine_layer
                     StartMenu();
                 }
             }
-            else
+            else if(selection==2)
             {
                 User registering_user = userInterface.RegisterUser();
                 registering_user.ConfigurationID = 1;
                 registering_user.ConfigurationID = ConfigurationMenu();
                 userDatabaseFunctions.RegisterUser(registering_user);
                 OperationsMenu();
+            }
+            else
+            {
+                Environment.Exit(0);
             }
         }
         private int ConfigurationMenu()

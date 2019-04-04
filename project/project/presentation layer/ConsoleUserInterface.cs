@@ -339,6 +339,7 @@ namespace project.presentation_layer
         }
         public string ViewNotesNames(List<string> noteNames)
         {
+            Console.Clear();
             int count = 1;
             foreach(string name in noteNames)
             {
