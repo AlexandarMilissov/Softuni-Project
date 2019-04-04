@@ -37,8 +37,8 @@ namespace project.database_layer
                     {
                         var product = new Configuration(
                             reader.GetInt32(0),
-                           () reader.GetInt32(1),
-                            reader.GetInt32(2)
+                            (ConsoleColor)reader.GetInt32(1),
+                            (ConsoleColor)reader.GetInt32(2)
                         );
 
                         NoteList.Add(product);
