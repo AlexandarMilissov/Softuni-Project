@@ -13,10 +13,11 @@ namespace project.database_layer
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("INSERT INTO Users(Username, Password)" +
-                "VALUES(@username, @password);", connection);
+                var command = new SqlCommand("INSERT INTO Users(Username, Password,ConfigId)" +
+                "VALUES(@username, @password,configid);", connection);
                 command.Parameters.AddWithValue("username", user.Username);
                 command.Parameters.AddWithValue("password", user.Password);
+                command.Parameters.AddWithValue("configid", user.ConfigurationID);
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -37,7 +38,8 @@ namespace project.database_layer
                         var product = new User(
                             reader.GetInt32(0),
                             reader.GetString(1),
-                            reader.GetString(2)
+                            reader.GetString(2),
+                            reader.GetInt32(3)
                         );
 
                         UserList.Add(product);
