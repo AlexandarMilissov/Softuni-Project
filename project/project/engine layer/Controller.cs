@@ -196,7 +196,26 @@ namespace project.engine_layer
         }
         private void ConfigureColors()
         {
-
+            Configuration config = new Configuration();
+            int colour_num = 0;
+            Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
+            while (colour_num < 1 || colour_num > 17)
+            {
+                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 17 included.");
+                Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
+            }
+            Console.BackgroundColor = (ConsoleColor)colour_num - 1;
+            config.BackgroundColour = (ConsoleColor)colour_num - 1;
+            Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
+            while (colour_num < 1 || colour_num > 17)
+            {
+                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 17 included.");
+                Int32.TryParse(userInterface.SelectTextColour(), out colour_num);
+            }
+            Console.ForegroundColor = (ConsoleColor)colour_num - 1;
+            config.TextColour = (ConsoleColor)colour_num - 1;
+            config.Id = currentUser.ConfigurationID;
+            configurationDatabaseFunctions.ChangeConfiguration(config);
         }
     }
 }
