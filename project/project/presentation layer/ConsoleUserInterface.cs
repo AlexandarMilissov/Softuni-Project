@@ -178,11 +178,15 @@ namespace project.presentation_layer
                     case ConsoleKey.Home:
                         {
                             posX = 0;
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
                             break;
                         }
                     case ConsoleKey.End:
                         {
                             posX = text[posY].Length;
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
                             break;
                         }
                     case ConsoleKey.PageDown:
@@ -192,6 +196,8 @@ namespace project.presentation_layer
                             {
                                 posX = text[posY].Length;
                             }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
                             break;
                         }
                     case ConsoleKey.PageUp:
@@ -201,6 +207,8 @@ namespace project.presentation_layer
                             {
                                 posX = text[posY].Length;
                             }
+                            Console.Write(PrintText(text));
+                            Console.SetCursorPosition(posX, posY);
                             break;
                         }
                     default:
