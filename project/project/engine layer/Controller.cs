@@ -43,6 +43,16 @@ namespace project.engine_layer
         private void CreateNote()
         {
             Note newNote = userInterface.CreateNote();
+            if(string.IsNullOrEmpty(newNote.Title))
+            {
+                userInterface.ErrorMessage("Note title cannot be empty.");
+                newNote = userInterface.CreateNote(newNote);
+            }
+            else if(newNote.Title.Length>20)
+            {
+                userInterface.ErrorMessage("Note title cannot be longer than 20 characters.");
+                newNote = userInterface.CreateNote(newNote);
+            }
             newNote.UserID = currentUser.UserId;
             noteDatabaseFunctions.MakeNewNote(newNote);
         }
