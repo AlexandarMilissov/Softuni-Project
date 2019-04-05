@@ -136,10 +136,5 @@ namespace Tests
 
             Assert.AreEqual(2, ConfigurationsList.Count, "The amount is incorrect.");
         }
-        [Test]
-        public void Hui()
-        {
-
-        }
     }
 }
