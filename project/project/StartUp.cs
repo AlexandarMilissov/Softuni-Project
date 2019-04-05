@@ -10,8 +10,6 @@ namespace project
         public static void Main(string[] args)
         {
             Controller start = new Controller();
-            //ConsoleUserInterface cui = new ConsoleUserInterface();
-            //User u = cui.RegisterUser();
         }
     }
 }

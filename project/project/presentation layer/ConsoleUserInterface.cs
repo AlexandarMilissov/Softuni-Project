@@ -11,36 +11,58 @@ namespace project.presentation_layer
         private string CreateNewNoteName()
         {
             Console.Clear();
-            Console.Write("Note name: \n"+
-                          "(Press escape to stop writing)\n" +
-                          "(Press any key to continue)");
-            Console.ReadKey();
-            Console.Clear();
-
-            List<string> text = new List<string>();
-            text.Add("");
-            int posX = 0;
-            int posY = 0;
-
-            string result = TextEditor(posX, posY, text);
-            return result;
+            Console.Write("Note name: \n");
+            string name = null;
+            while (true)
+            {
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Enter)
+                    break;
+                else if (key.Key == ConsoleKey.Backspace)
+                {
+                    if (name.Length == 0)
+                    {
+                        continue;
+                    }
+                    name = name.Substring(0, name.Length - 1);
+                }
+                else
+                {
+                    name += key.KeyChar;
+                }
+            }
+            
+            return name;
         }
         private string CreateNewNoteName(string oldName)
         {
-            Console.Clear();
-            Console.Write("Note name: \n"+
-                          "(Press escape to stop writing)\n" +
-                          "(Press any key to continue)");
-            Console.ReadKey();
-            Console.Clear();
+            string newName = oldName;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Edit note title");
+                Console.Write(newName);
+                Console.CursorLeft = newName.Length;
 
-
-            List<string> text = oldName.Split("\n").ToList();
-            int posY = text.Count - 1;
-            int posX = text[posY].Length;
-
-            string Name = TextEditor(posX, posY, text);
-            return Name;
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+                else if (key.Key == ConsoleKey.Backspace)
+                {
+                    if (newName.Length == 0)
+                    {
+                        continue;
+                    }
+                    newName = newName.Substring(0, newName.Length - 1);
+                }
+                else
+                {
+                    newName += key.KeyChar;
+                }
+            } while (true);
+            return newName;
         }
         private string TextEditor(int posX,int posY, List<string> text)
         {
