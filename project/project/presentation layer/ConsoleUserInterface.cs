@@ -11,22 +11,36 @@ namespace project.presentation_layer
         private string CreateNewNoteName()
         {
             Console.Clear();
+            Console.Write("Note name: \n"+
+                          "(Press escape to stop writing)\n" +
+                          "(Press any key to continue)");
+            Console.ReadKey();
+            Console.Clear();
 
-            Console.Write("Note name: \n");
-            string result = Console.ReadLine();
+            List<string> text = new List<string>();
+            text.Add("");
+            int posX = 0;
+            int posY = 0;
+
+            string result = TextEditor(posX, posY, text);
             return result;
         }
         private string CreateNewNoteName(string oldName)
         {
             Console.Clear();
-            Console.WriteLine("Press Enter to use the old title or write the new from the begging.");
-            Console.WriteLine(oldName);
-            string answer = Console.ReadLine();
-            if(answer == "")
-            {
-                answer = oldName;
-            }
-            return answer;
+            Console.Write("Note name: \n"+
+                          "(Press escape to stop writing)\n" +
+                          "(Press any key to continue)");
+            Console.ReadKey();
+            Console.Clear();
+
+
+            List<string> text = oldName.Split("\n").ToList();
+            int posY = text.Count - 1;
+            int posX = text[posY].Length;
+
+            string Name = TextEditor(posX, posY, text);
+            return Name;
         }
         private string TextEditor(int posX,int posY, List<string> text)
         {
@@ -237,8 +251,8 @@ namespace project.presentation_layer
         {
             Console.Clear();
             Console.WriteLine("Note Description\n" +
-                              "(Press escape to stop writting)\n"+
-                              "(Press anykey to continue)");
+                              "(Press escape to stop writing)\n"+
+                              "(Press any key to continue)");
             Console.ReadKey();
             Console.Clear();
 
@@ -255,8 +269,8 @@ namespace project.presentation_layer
         {
             Console.Clear();
             Console.WriteLine("Update your note description\n" +
-                              "(Press escape to stop writting)\n" +
-                              "(Press anykey to continue)");
+                              "(Press escape to stop writing)\n" +
+                              "(Press any key to continue)");
             Console.ReadKey();
             Console.Clear();
 
@@ -390,7 +404,7 @@ namespace project.presentation_layer
                     break;
                 else if(key.Key == ConsoleKey.Backspace)
                 {
-                    password.Remove(password.Length - 1);
+                    password.Remove(password.Length - 2);
                 }
                 else
                 {
