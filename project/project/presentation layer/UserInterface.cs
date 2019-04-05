@@ -14,6 +14,7 @@ namespace project.presentation_layer
         void ViewNote(Note note);
         string ViewNotesNames(List<string> noteNames);
         Note CreateNote();
+        Note CreateNote(Note note);
         User RegisterUser();
         string SelectBackgroundColour();
         string SelectTextColour();
