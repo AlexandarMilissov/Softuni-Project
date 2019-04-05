@@ -8,6 +8,10 @@ namespace project.presentation_layer
 {
     public class ConsoleUserInterface : IUserInterface
     {
+        /// <summary>
+        /// Asks the user for name of the note
+        /// </summary>
+        /// <returns></returns>
         private string CreateNewNoteName()
         {
             string name = "";
@@ -36,6 +40,11 @@ namespace project.presentation_layer
             }
             return name;
         }
+        /// <summary>
+        /// Writes the name of a note and gives the user ability to rewrite it
+        /// </summary>
+        /// <param name="oldName"></param>
+        /// <returns></returns>
         private string CreateNewNoteName(string oldName)
         {
             string newName = oldName;
@@ -70,6 +79,13 @@ namespace project.presentation_layer
             } while (true);
             return newName;
         }
+        /// <summary>
+        /// Gives the ability the user to edit text.
+        /// </summary>
+        /// <param name="posX"></param>
+        /// <param name="posY"></param>
+        /// <param name="text"></param>
+        /// <returns>The text in string format.</returns>
         private string TextEditor(int posX,int posY, List<string> text)
         {
             ConsoleKeyInfo keyPressed;
@@ -275,6 +291,10 @@ namespace project.presentation_layer
                 }
             }
         }
+        /// <summary>
+        /// Asks the user for descriotion of the note
+        /// </summary>
+        /// <returns></returns>
         private string CreateNewNoteText()
         {
             Console.Clear();
@@ -293,6 +313,11 @@ namespace project.presentation_layer
             string description = TextEditor(posX, posY, text);
             return description;
         }
+        /// <summary>
+        /// Writes the description of a note and gives the user ability to rewrite it
+        /// </summary>
+        /// <param name="oldDescription"></param>
+        /// <returns></returns>
         private string CreateNewNoteText(string oldDescription)
         {
             Console.Clear();
@@ -311,6 +336,11 @@ namespace project.presentation_layer
             return description;
             
         }
+        /// <summary>
+        /// Prints a text on the screen.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         private string PrintText(List<string> text)
         {
             Console.Clear();
@@ -321,6 +351,11 @@ namespace project.presentation_layer
             }
             return result;
         }
+        /// <summary>
+        /// Prints list on all colours on the screen
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns>What the user has written. It's supposed to be the number of the colour in the given list. You can cast it to 'ConsoleColor'</returns>
         private string SelectColour(string message)
         {
             Console.Clear();
