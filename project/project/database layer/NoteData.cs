@@ -9,7 +9,7 @@ namespace project.database_layer
     /// <summary>
     /// The class NoteData.
     /// </summary>
-    class NoteData
+    public class NoteData
     {
         /// <summary>
         /// This method used to display every existing note in the Database from the SQL Server.

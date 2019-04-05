@@ -9,7 +9,7 @@ namespace project.database_layer
     /// <summary>
     /// The class ConfigurationData.
     /// </summary>
-    class ConfigurationData
+    public class ConfigurationData
     {
         /// <summary>
         /// This method is used for making a new configuration.
