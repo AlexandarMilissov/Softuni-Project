@@ -35,7 +35,8 @@ namespace project.engine_layer
             {
                 return;
             }
-            Note newNote = userInterface.CreateNote();
+            Note oldNote = noteDatabaseFunctions.ShowAll().Where(x => x.NoteId == note_id).First();
+            Note newNote = userInterface.CreateNote(oldNote);
             newNote.NoteId = note_id;
             noteDatabaseFunctions.UpdateNote(newNote);
         }
@@ -93,7 +94,7 @@ namespace project.engine_layer
                 userInterface.ErrorMessage("Invalid input detected. Please enter a NUMBER between 1 and 7 included.");
                 Int32.TryParse(userInterface.SelectFunction(), out selection);
             }
-            while (selection != 7)
+            while (true)
             {
                 switch (selection)
                 {
@@ -116,6 +117,9 @@ namespace project.engine_layer
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         StartMenu();
+                        break;
+                    case 7:
+                        Environment.Exit(0);
                         break;
                 }
                 Int32.TryParse(userInterface.SelectFunction(), out selection);
