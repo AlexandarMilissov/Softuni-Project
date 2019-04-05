@@ -37,24 +37,30 @@ namespace project.engine_layer
             }
             Note oldNote = noteDatabaseFunctions.ShowAll().Where(x => x.NoteId == note_id).First();
             Note newNote = userInterface.CreateNote(oldNote);
+            newNote = NoteFieldsValidation(newNote);
             newNote.NoteId = note_id;
             noteDatabaseFunctions.UpdateNote(newNote);
         }
         private void CreateNote()
         {
             Note newNote = userInterface.CreateNote();
-            if(string.IsNullOrEmpty(newNote.Title))
+            newNote = NoteFieldsValidation(newNote);
+            newNote.UserID = currentUser.UserId;
+            noteDatabaseFunctions.MakeNewNote(newNote);
+        }
+        private Note NoteFieldsValidation(Note newNote)
+        {
+            while (string.IsNullOrEmpty(newNote.Title))
             {
                 userInterface.ErrorMessage("Note title cannot be empty.");
                 newNote = userInterface.CreateNote(newNote);
             }
-            else if(newNote.Title.Length>20)
+            while (newNote.Title.Length > 20)
             {
                 userInterface.ErrorMessage("Note title cannot be longer than 20 characters.");
                 newNote = userInterface.CreateNote(newNote);
             }
-            newNote.UserID = currentUser.UserId;
-            noteDatabaseFunctions.MakeNewNote(newNote);
+            return newNote;
         }
         private void PrintNote()
         {
