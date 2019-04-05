@@ -68,16 +68,10 @@ namespace project.engine_layer
             {
                 titles.Add(item.Title);
             }
-            int note_num = 0;
-            Int32.TryParse(userInterface.ViewNotesNames(titles), out note_num);
-            while (note_num < 1 || note_num > available_notes.Count)
+            int note_num = UserNoteChoiceValidation(titles);
+            if(note_num==-1)
             {
-                if(note_num==available_notes.Count+1)
-                {
-                    return -1;
-                }
-                userInterface.ErrorMessage("No note with the entered number exists in the database.");
-                note_num = ListNotes();
+                return -1;
             }
             string note_name = titles[note_num-1];
             foreach(var item in available_notes)
@@ -86,6 +80,21 @@ namespace project.engine_layer
                 {
                     note_num = item.NoteId;
                 }
+            }
+            return note_num;
+        }
+        private int UserNoteChoiceValidation(List<string> input)
+        {
+            int note_num = 0;
+            Int32.TryParse(userInterface.ViewNotesNames(input), out note_num);
+            if (note_num < 1 || note_num > input.Count)
+            {
+                if (note_num == input.Count + 1)
+                {
+                    return -1;
+                }
+                userInterface.ErrorMessage("No note with the entered number exists in the database.");
+                note_num = UserNoteChoiceValidation(input);
             }
             return note_num;
         }
