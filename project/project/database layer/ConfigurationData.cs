@@ -7,7 +7,7 @@ using project.Models;
 namespace project.database_layer
 {
     /// <summary>
-    /// The class ConfigurationData
+    /// The class ConfigurationData.
     /// </summary>
     class ConfigurationData
     {
@@ -47,7 +47,7 @@ namespace project.database_layer
             }
         }
         /// <summary>
-        /// This method used to display every existing configurations in the Database from the SQL Server.
+        /// This method used to display every existing configuration in the Database from the SQL Server.
         /// </summary>
         /// <returns>List of all existing configurations.</returns>
         public List<Configuration> ShowAll()
