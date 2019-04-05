@@ -404,7 +404,11 @@ namespace project.presentation_layer
                     break;
                 else if(key.Key == ConsoleKey.Backspace)
                 {
-                    password.Substring(password.Length - 1);
+                    if(password.Length == 0)
+                    {
+                        continue;
+                    }
+                    password = password.Substring(0,password.Length - 1);
                 }
                 else
                 {
