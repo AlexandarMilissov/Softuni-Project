@@ -115,7 +115,7 @@ namespace Tests
             UsersList.Add(user1);
             UsersList.Add(user2);
 
-            Assert.AreEqual(2,UsersList.Count,"The amount is incorrect.");
+            Assert.AreEqual(2, UsersList.Count, "The amount is incorrect.");
         }
         [Test]
         public void DoesItShowAllConfigurationsCorrectly()
@@ -124,7 +124,7 @@ namespace Tests
             configuration1.Id = 1;
             configuration1.TextColour = System.ConsoleColor.Red;
             configuration1.BackgroundColour = System.ConsoleColor.Black;
-           
+
             Configuration configuration2 = new Configuration();
             configuration2.Id = 1;
             configuration2.TextColour = System.ConsoleColor.Red;
@@ -135,6 +135,30 @@ namespace Tests
             ConfigurationsList.Add(configuration2);
 
             Assert.AreEqual(2, ConfigurationsList.Count, "The amount is incorrect.");
+        }
+        [Test]
+        //TODO...
+        public void DoesItGetTheCorrectIdOfANote()
+        {
+
+        }
+        [Test]
+        //TODO...
+        public void DoesItDeleteNoteById()
+        {
+
+        }
+        [Test]
+        //TODO...
+        public void DoesItUpdateNote()
+        {
+
+        }
+        [Test]
+        //TODO...
+        public void DoesItUpdateConfiguration()
+        {
+
         }
     }
 }
