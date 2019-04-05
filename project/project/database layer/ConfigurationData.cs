@@ -7,7 +7,7 @@ using project.Models;
 namespace project.database_layer
 {
     /// <summary>
-    /// The class COnfigurationData
+    /// The class ConfigurationData
     /// </summary>
     class ConfigurationData
     {
