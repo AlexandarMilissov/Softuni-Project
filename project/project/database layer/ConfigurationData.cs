@@ -6,8 +6,15 @@ using project.Models;
 
 namespace project.database_layer
 {
+    /// <summary>
+    /// The class COnfigurationData
+    /// </summary>
     class ConfigurationData
     {
+        /// <summary>
+        /// This method is used for making a new configuration.
+        /// </summary>
+        /// <param name="configuration"> This is used to be filled with parameters by the user.</param>
         public void MakeNewConfiguration(Configuration configuration)
         {
             using (var connection = Connection.GetConnection())
@@ -21,6 +28,10 @@ namespace project.database_layer
                 connection.Close();
             }
         }
+        /// <summary>
+        /// This metod is used for changing a configuration.
+        /// </summary>
+        /// <param name="config">This changes the parameters of an already existing configuration that is found by Id.</param>
         public void ChangeConfiguration(Configuration config)
         {
             using (var connection = Connection.GetConnection())
@@ -35,6 +46,10 @@ namespace project.database_layer
                 connection.Close();
             }
         }
+        /// <summary>
+        /// This method used to display every existing configurations in the Database from the SQL Server.
+        /// </summary>
+        /// <returns>List of all existing configurations.</returns>
         public List<Configuration> ShowAll()
         {
             var ConfigList = new List<Configuration>();

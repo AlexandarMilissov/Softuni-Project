@@ -5,6 +5,9 @@ using System.Text;
 
 namespace project.database_layer
 {
+    /// <summary>
+    /// Thie class used for establishing connection with the SQL server.
+    /// </summary>
     public static class Connection
     {
         /// <summary>
