@@ -10,11 +10,14 @@ namespace project.presentation_layer
     {
         private string CreateNewNoteName()
         {
-            Console.Clear();
-            Console.Write("Note name: \n");
-            string name = null;
+            string name = "";
+
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Note title:\n");
+                Console.Write(name);
+                Console.CursorLeft = name.Length;
                 var key = Console.ReadKey();
                 if (key.Key == ConsoleKey.Enter)
                     break;
@@ -31,7 +34,6 @@ namespace project.presentation_layer
                     name += key.KeyChar;
                 }
             }
-            
             return name;
         }
         private string CreateNewNoteName(string oldName)
@@ -61,6 +63,10 @@ namespace project.presentation_layer
                 {
                     newName += key.KeyChar;
                 }
+                Console.Clear();
+                Console.WriteLine("Edit note title");
+                Console.Write(newName);
+                Console.CursorLeft = newName.Length;
             } while (true);
             return newName;
         }
