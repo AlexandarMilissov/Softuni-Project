@@ -395,7 +395,7 @@ namespace project.presentation_layer
             Console.WriteLine("Username:");
             string username = Console.ReadLine();
 
-            Console.Write("password:\n");
+            Console.Write("Password:\n");
             string password = null;
             while (true)
             {
@@ -404,7 +404,7 @@ namespace project.presentation_layer
                     break;
                 else if(key.Key == ConsoleKey.Backspace)
                 {
-                    password.Remove(password.Length - 2);
+                    password.Substring(password.Length - 1);
                 }
                 else
                 {
