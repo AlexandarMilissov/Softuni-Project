@@ -72,6 +72,10 @@ namespace project.engine_layer
             Int32.TryParse(userInterface.ViewNotesNames(titles), out note_num);
             while (note_num < 1 || note_num > available_notes.Count)
             {
+                if(note_num==available_notes.Count+1)
+                {
+                    return -1;
+                }
                 userInterface.ErrorMessage("No note with the entered number exists in the database.");
                 note_num = ListNotes();
             }

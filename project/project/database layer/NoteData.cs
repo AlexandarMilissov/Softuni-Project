@@ -100,7 +100,7 @@ namespace project.database_layer
         {
             using (var connection = Connection.GetConnection())
             {
-                var command = new SqlCommand("DELETE note FROM Notes where NoteId=@id;", connection);
+                var command = new SqlCommand("DELETE FROM Notes where NoteId=@id;", connection);
                 command.Parameters.AddWithValue("id", id);
                 connection.Open();
                 command.ExecuteNonQuery();

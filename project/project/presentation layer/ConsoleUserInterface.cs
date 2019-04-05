@@ -362,7 +362,7 @@ namespace project.presentation_layer
                 Console.WriteLine(count + ". " + name);
                 count++;
             }
-            Console.WriteLine(count + ". " + "Exit");
+            Console.WriteLine(count + ".(Return to the main menu)");
             Console.Write("Please write the number of the note you want to use and press 'Enter'\n");
             string answer = Console.ReadLine();
             return answer;
