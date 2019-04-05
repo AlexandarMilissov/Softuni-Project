@@ -381,14 +381,21 @@ namespace project.presentation_layer
             Console.WriteLine("Username:");
             string username = Console.ReadLine();
 
-            Console.Write("password:");
+            Console.Write("password:\n");
             string password = null;
             while (true)
             {
                 var key = System.Console.ReadKey(true);
                 if (key.Key == ConsoleKey.Enter)
                     break;
-                password += key.KeyChar;
+                else if(key.Key == ConsoleKey.Backspace)
+                {
+                    password.Remove(password.Length - 1);
+                }
+                else
+                {
+                    password += key.KeyChar;
+                }
             }
 
             User user = new User(username,password);
