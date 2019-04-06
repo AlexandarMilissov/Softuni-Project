@@ -284,7 +284,7 @@ namespace project.engine_layer
             Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
             while (colour_num < 1 || colour_num > 17)
             {
-                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 17 included.");
+                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 16 included.");
                 Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
             }
             Console.BackgroundColor = (ConsoleColor)colour_num - 1;
@@ -292,7 +292,7 @@ namespace project.engine_layer
             Int32.TryParse(userInterface.SelectBackgroundColour(), out colour_num);
             while (colour_num < 1 || colour_num > 17)
             {
-                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 17 included.");
+                userInterface.ErrorMessage("Please enter a NUMBER between 1 and 16 included.");
                 Int32.TryParse(userInterface.SelectTextColour(), out colour_num);
             }
             Console.ForegroundColor = (ConsoleColor)colour_num - 1;
