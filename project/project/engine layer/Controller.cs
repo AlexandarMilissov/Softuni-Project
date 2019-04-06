@@ -10,15 +10,36 @@ namespace project.engine_layer
 {
     public class Controller
     {
+        /// <summary>
+        /// A private variable for user interface class initialization.
+        /// </summary>
         private IUserInterface userInterface = new ConsoleUserInterface();
+        /// <summary>
+        /// A private variable for class 'Note' database functions initialization.
+        /// </summary>
         private NoteData noteDatabaseFunctions = new NoteData();
+        /// <summary>
+        /// A private variable for class 'User' database functions initialization.
+        /// </summary>
         private UserData userDatabaseFunctions = new UserData();
+        /// <summary>
+        /// A private variable for class 'Configuration' database functions initialization.
+        /// </summary>
         private ConfigurationData configurationDatabaseFunctions = new ConfigurationData();
+        /// <summary>
+        /// A private variable that keeps track of the currently logged in user.
+        /// </summary>
         private User currentUser = null;
+        /// <summary>
+        /// A public contstructor for global program startup.
+        /// </summary>
         public Controller()
         {
             StartMenu();
         }
+        /// <summary>
+        /// A private method for note deletion. Connects the database and presentation layers.
+        /// </summary>
         private void DeleteNote()
         {
             int note_num = ListNotes();
@@ -28,6 +49,9 @@ namespace project.engine_layer
             }
             noteDatabaseFunctions.DeleteNote(note_num);
         }
+        /// <summary>
+        /// A private method for note editing. Connects the database and presentation layers.
+        /// </summary>
         private void UpdateNote()
         {
             int note_id = ListNotes();
@@ -41,6 +65,9 @@ namespace project.engine_layer
             newNote.NoteId = note_id;
             noteDatabaseFunctions.UpdateNote(newNote);
         }
+        /// <summary>
+        /// A private method for note creation. Connects the database and presentation layers.
+        /// </summary>
         private void CreateNote()
         {
             Note newNote = userInterface.CreateNote();
@@ -48,6 +75,11 @@ namespace project.engine_layer
             newNote.UserID = currentUser.UserId;
             noteDatabaseFunctions.MakeNewNote(newNote);
         }
+        /// <summary>
+        /// A private method for note parameters validation. Checks if the note title is empty or longer than 20 symbols.
+        /// </summary>
+        /// <param name="newNote">The note to be checked.</param>
+        /// <returns>Returns an instance of the class 'Note' that complies with the standards.</returns>
         private Note NoteFieldsValidation(Note newNote)
         {
             while (string.IsNullOrEmpty(newNote.Title))
@@ -62,6 +94,9 @@ namespace project.engine_layer
             }
             return newNote;
         }
+        /// <summary>
+        /// A private method for note printing. Connects the database and presentation layers.
+        /// </summary>
         private void PrintNote()
         {
             int note_num = ListNotes();
@@ -71,6 +106,10 @@ namespace project.engine_layer
             }
             userInterface.ViewNote(noteDatabaseFunctions.ShowSpecificNote(note_num));
         }
+        /// <summary>
+        /// A private method that is used in multiple other private methods. Created for convenience. Lists all the available notes in the database and returns the number of the selected by the user note.
+        /// </summary>
+        /// <returns>The index of the selected by the user note.</returns>
         private int ListNotes()
         {
             var available_notes = noteDatabaseFunctions.ShowAll().Where(x => x.UserID == currentUser.UserId).ToList();
@@ -99,6 +138,11 @@ namespace project.engine_layer
             }
             return note_num;
         }
+        /// <summary>
+        /// A created for convenience private method. Checks whether the entered from the user number is valid and asks for a new input every time it is not.
+        /// </summary>
+        /// <param name="input">The list with the availabe notes titles.</param>
+        /// <returns>A valid index from the list.</returns>
         private int UserNoteChoiceValidation(List<string> input)
         {
             int note_num = 0;
@@ -114,11 +158,14 @@ namespace project.engine_layer
             }
             return note_num;
         }
+        /// <summary>
+        /// The second screen that user sees after they register/login. Acts as a menu controller.
+        /// </summary>
         private void OperationsMenu()
         {
             int selection = 0;
             Int32.TryParse(userInterface.SelectFunction(), out selection);
-            while(selection == 0 || (selection < 1 || selection > 7))
+            while(selection < 1 || selection > 7)
             {
                 userInterface.ErrorMessage("Invalid input detected. Please enter a NUMBER between 1 and 7 included.");
                 Int32.TryParse(userInterface.SelectFunction(), out selection);
@@ -159,6 +206,9 @@ namespace project.engine_layer
                 }
             }
         }
+        /// <summary>
+        /// The first screen that a user sees after they execute the program. Acts as a main menu controller.
+        /// </summary>
         private void StartMenu()
         {
             int selection = 0;
@@ -204,19 +254,29 @@ namespace project.engine_layer
                 Environment.Exit(0);
             }
         }
+        /// <summary>
+        /// A private method that exists for the sake of convenience. Adds a new user configuration in the database and returns it's id.
+        /// </summary>
+        /// <returns>The id of the latest newly added configuration.</returns>
         private int ConfigurationMenu()
         {
             Configuration config = Configure();
             configurationDatabaseFunctions.MakeNewConfiguration(config);
             return configurationDatabaseFunctions.ShowAll().Last().Id;
         }
+        /// <summary>
+        /// A private method that exists for the sake of convenience. Changes a user configuration in the database.
+        /// </summary>
         private void ConfigureColors()
         {
             Configuration config = Configure();
             config.Id = currentUser.ConfigurationID;
             configurationDatabaseFunctions.ChangeConfiguration(config);
         }
-
+        /// <summary>
+        /// A private method for configuration selection. Acts as a configuration menu setup controller.
+        /// </summary>
+        /// <returns>An instance of the configuration that the user has created.</returns>
         private Configuration Configure()
         {
             Configuration config = new Configuration();
