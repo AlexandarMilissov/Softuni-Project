@@ -9,9 +9,7 @@ namespace project
     {
         public static void Main(string[] args)
         {
-            //Controller start = new Controller();
-            ConsoleUserInterface c = new ConsoleUserInterface();
-            c.CreateNote();
+            Controller start = new Controller();
         }
     }
 }
