@@ -9,16 +9,17 @@ namespace project.presentation_layer
     public class ConsoleUserInterface : IUserInterface
     {
         /// <summary>
-        /// Writes the name of a note and gives the user ability to rewrite it
+        /// Asks the user to write text.
         /// </summary>
-        /// <param name="oldName"></param>
+        /// <param name="old"> Something the user can rewrite.</param>
+        /// <param name="meta"> Text that should be written to the user. They can't edit it. </param>
+        /// <param name="canEnter">If the user is allowed to add new rolls.</param>
         /// <returns></returns>
-        private string CreateNewNoteName(string oldName,string meta)
+        private string CreateNoteInfo(string old,string meta,bool canEnter)
         {
-            List<string> newName = StringToList(oldName);
-            int posY = newName.Count - 1;
-            int posX = newName[posY].Length;
-            return TextEditor(posX, posY, newName, false, StringToList(meta));
+            List<string> newName = StringToList(old);
+            string name = TextEditor(newName, canEnter, StringToList(meta));
+            return name;
         }
         /// <summary>
         /// Gives the ability the user to edit text.
@@ -27,8 +28,10 @@ namespace project.presentation_layer
         /// <param name="posY"></param>
         /// <param name="text"></param>
         /// <returns>The text in string format.</returns>
-        private string TextEditor(int posX,int posY, List<string> text,bool canEnter,List<string> input)
+        private string TextEditor(List<string> text,bool canEnter,List<string> input)
         {
+            int posY = text.Count - 1;
+            int posX = text[posY].Length;
             PrintText(text, input);
             Console.SetCursorPosition(posX, posY + input.Count);
             ConsoleKeyInfo keyPressed;
@@ -65,7 +68,9 @@ namespace project.presentation_layer
                         }
                     case ConsoleKey.Escape:
                         {
-                            return PrintText(text, input);
+                            string result = PrintText(text, input);
+                            result = result.Remove(result.Length - 1,1);
+                            return result;
                         }
                     case ConsoleKey.Enter:
                         {
@@ -241,25 +246,7 @@ namespace project.presentation_layer
                 }
             }
         }
-        /// <summary>
-        /// Asks the user for description of the note.
-        /// </summary>
-        /// <returns></returns>
-        /// <summary>
-        /// Writes the description of a note and gives the user ability to rewrite it.
-        /// </summary>
-        /// <param name="oldDescription"></param>
-        /// <returns></returns>
-        private string CreateNewNoteText(string oldDescription, string meta)
-        {
-            List<string> text = StringToList(oldDescription);
-            int posY = text.Count - 1;
-            int posX = text[posY].Length;
-            
-            string description = TextEditor(posX, posY, text, true, StringToList(meta));
-            return description;
-            
-        }
+
         /// <summary>
         /// Prints a text on the screen.
         /// </summary>
@@ -307,7 +294,11 @@ namespace project.presentation_layer
             string result = Console.ReadLine();
             return result;
         }
-
+        /// <summary>
+        /// Creates a single string from list of strings, separates the with new row.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         private string ListToString(List<string> text)
         {
             string result = "";
@@ -317,6 +308,11 @@ namespace project.presentation_layer
             }
             return result;
         }
+        /// <summary>
+        /// Creates a list of string from a single string, separates by with new row.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         private List<string> StringToList(string text)
         {
             List<string> result = text.Split("\n").ToList();
@@ -333,13 +329,13 @@ namespace project.presentation_layer
             string metaTitle = "Note title:\n" +
                               "(Press escape to stop writing)\n"
                               + "";
-            string noteName = CreateNewNoteName("",metaTitle);
+            string noteName = CreateNoteInfo("",metaTitle,false);
 
 
 
             string metaDesc = "Note Description\n" +
                               "(Press escape to stop writing)\n";
-            string text = CreateNewNoteText("",metaDesc);
+            string text = CreateNoteInfo("",metaDesc,true);
 
             Note note = new Note(noteName, text);
 
@@ -357,13 +353,13 @@ namespace project.presentation_layer
             string metaTitle = "Edit note title:" +
                               "(Press escape to stop writing)\n"
                               + "";
-            string noteName = CreateNewNoteName(note.Title,metaTitle);
+            string noteName = CreateNoteInfo(note.Title,metaTitle,false);
 
 
             string metaDesc = "Note Description\n" +
                               "(Press escape to stop writing)\n"
                               + "";
-            string text = CreateNewNoteText(note.Description,metaDesc);
+            string text = CreateNoteInfo(note.Description,metaDesc,true);
 
             Note updatedNote = new Note(noteName, text);
 
