@@ -5,7 +5,7 @@ using System.Text;
 namespace project.Models
 {
     /// <summary>
-    /// The class User
+    /// The class User.
     /// </summary>
     public class User
     {

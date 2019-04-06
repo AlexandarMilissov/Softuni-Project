@@ -65,7 +65,7 @@ namespace project.database_layer
         /// This method is used for showing a specific note.
         /// </summary>
         /// <param name="id"> This parameter is searched in the Notes table.</param>
-        /// <returns></returns>
+        /// <returns>The specific note.</returns>
         public Note ShowSpecificNote(int id)
         {
             Note note = null;
@@ -108,7 +108,7 @@ namespace project.database_layer
             }
         }
         /// <summary>
-        /// This method is used for updating note.
+        /// This method is used for updating a note.
         /// </summary>
         /// <param name="note">Gets a note with parameters given by the user.</param>
         public void UpdateNote(Note note)

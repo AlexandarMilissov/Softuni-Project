@@ -246,6 +246,7 @@ namespace project.presentation_layer
                 }
             }
         }
+
         /// <summary>
         /// Prints a text on the screen.
         /// </summary>
@@ -262,7 +263,7 @@ namespace project.presentation_layer
             return result;
         }
         /// <summary>
-        /// Prints list on all colours on the screen
+        /// Prints list of all colours on the screen.
         /// </summary>
         /// <param name="message"></param>
         /// <returns>What the user has written. It's supposed to be the number of the colour in the given list. You can cast it to 'ConsoleColor'</returns>
@@ -317,7 +318,10 @@ namespace project.presentation_layer
             List<string> result = text.Split("\n").ToList();
             return result;
         }
-
+        /// <summary>
+        /// Displays the menu for creating a note.
+        /// </summary>
+        /// <returns>Note with the specific parameters.</returns>
         public Note CreateNote()
         {
             Console.Clear();
@@ -337,6 +341,11 @@ namespace project.presentation_layer
 
             return note;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns></returns>
         public Note CreateNote(Note note)
         {
             Console.Clear();
