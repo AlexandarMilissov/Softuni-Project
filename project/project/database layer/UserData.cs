@@ -13,9 +13,9 @@ namespace project.database_layer
     public class UserData
     {
         /// <summary>
-        /// This method registers new user in the Database from the SQL Server.
+        /// This method registers new user in the Database.
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="user">Makes a new user that gets parameters from a user.</param>
         public void RegisterUser(User user)
         {
             using (var connection = Connection.GetConnection())

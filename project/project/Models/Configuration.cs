@@ -5,7 +5,7 @@ using System.Text;
 namespace project.Models
 {
     /// <summary>
-    /// The class Configuration
+    /// The class Configuration.
     /// </summary>
     public class Configuration
     {
