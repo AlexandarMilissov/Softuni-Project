@@ -9,75 +9,16 @@ namespace project.presentation_layer
     public class ConsoleUserInterface : IUserInterface
     {
         /// <summary>
-        /// Asks the user for name of the note
-        /// </summary>
-        /// <returns></returns>
-        private string CreateNewNoteName()
-        {
-            string name = "";
-
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("Note title:\n");
-                Console.Write(name);
-                Console.CursorLeft = name.Length;
-                var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
-                    break;
-                else if (key.Key == ConsoleKey.Backspace)
-                {
-                    if (name.Length == 0)
-                    {
-                        continue;
-                    }
-                    name = name.Substring(0, name.Length - 1);
-                }
-                else
-                {
-                    name += key.KeyChar;
-                }
-            }
-            return name;
-        }
-        /// <summary>
         /// Writes the name of a note and gives the user ability to rewrite it
         /// </summary>
         /// <param name="oldName"></param>
         /// <returns></returns>
-        private string CreateNewNoteName(string oldName)
+        private string CreateNewNoteName(string oldName,string meta)
         {
-            string newName = oldName;
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Edit note title");
-                Console.Write(newName);
-                Console.CursorLeft = newName.Length;
-
-                var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
-                {
-                    break;
-                }
-                else if (key.Key == ConsoleKey.Backspace)
-                {
-                    if (newName.Length == 0)
-                    {
-                        continue;
-                    }
-                    newName = newName.Substring(0, newName.Length - 1);
-                }
-                else
-                {
-                    newName += key.KeyChar;
-                }
-                Console.Clear();
-                Console.WriteLine("Edit note title");
-                Console.Write(newName);
-                Console.CursorLeft = newName.Length;
-            } while (true);
-            return newName;
+            List<string> newName = StringToList(oldName);
+            int posY = newName.Count - 1;
+            int posX = newName[posY].Length;
+            return TextEditor(posX, posY, newName, false, StringToList(meta));
         }
         /// <summary>
         /// Gives the ability the user to edit text.
@@ -86,8 +27,10 @@ namespace project.presentation_layer
         /// <param name="posY"></param>
         /// <param name="text"></param>
         /// <returns>The text in string format.</returns>
-        private string TextEditor(int posX,int posY, List<string> text)
+        private string TextEditor(int posX,int posY, List<string> text,bool canEnter,List<string> input)
         {
+            PrintText(text, input);
+            Console.SetCursorPosition(posX, posY + input.Count);
             ConsoleKeyInfo keyPressed;
             while (true)
             {
@@ -116,16 +59,22 @@ namespace project.presentation_layer
                                 text[posY] = text[posY].Remove(posX - 1, 1);
                                 posX--;
                             }
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             continue;
                         }
                     case ConsoleKey.Escape:
                         {
-                            return PrintText(text);
+                            return PrintText(text, input);
                         }
                     case ConsoleKey.Enter:
                         {
+                            if(!canEnter)
+                            {
+                                PrintText(text, input);
+                                Console.SetCursorPosition(posX, posY + input.Count);
+                                break;
+                            }
                             string newRow = "";
                             if (posX != text[posY].Length)
                             {
@@ -137,16 +86,16 @@ namespace project.presentation_layer
                             posX = 0;
                             text.Insert(posY, newRow);
 
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     case ConsoleKey.Delete:
                         {
                             if (posY == text.Count - 1 && posX == text[text.Count - 1].Length)
                             {
-                                Console.Write(PrintText(text));
-                                Console.SetCursorPosition(posX, posY);
+                                PrintText(text, input);
+                                Console.SetCursorPosition(posX, posY + input.Count);
                                 break;
                             }
                             if (posX == text[posY].Length)
@@ -161,8 +110,8 @@ namespace project.presentation_layer
                             {
                                 text[posY] = text[posY].Remove(posX, 1);
                             }
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     case ConsoleKey.LeftArrow:
@@ -180,8 +129,8 @@ namespace project.presentation_layer
                                     posX = text[posY].Length;
                                 }
                             }
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     case ConsoleKey.RightArrow:
@@ -189,18 +138,19 @@ namespace project.presentation_layer
                             posX++;
                             if (posX > text[posY].Length)
                             {
-                                if (posY == text.Count)
+                                posY++;
+                                if (posY > text.Count - 1)
                                 {
                                     posY--;
+                                    posX--;
                                 }
                                 else
                                 {
                                     posX = 0;
-                                    posY++;
                                 }
                             }
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     case ConsoleKey.UpArrow:
@@ -214,8 +164,8 @@ namespace project.presentation_layer
                             {
                                 posX = text[posY].Length;
                             }
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     case ConsoleKey.DownArrow:
@@ -229,22 +179,22 @@ namespace project.presentation_layer
                             {
                                 posX = text[posY].Length;
                             }
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     case ConsoleKey.Home:
                         {
                             posX = 0;
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     case ConsoleKey.End:
                         {
                             posX = text[posY].Length;
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     case ConsoleKey.PageDown:
@@ -254,8 +204,8 @@ namespace project.presentation_layer
                             {
                                 posX = text[posY].Length;
                             }
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     case ConsoleKey.PageUp:
@@ -265,8 +215,8 @@ namespace project.presentation_layer
                             {
                                 posX = text[posY].Length;
                             }
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                     default:
@@ -281,11 +231,11 @@ namespace project.presentation_layer
                                 posX = 0;
                                 text.Insert(posY, newRow);
 
-                                Console.Write(PrintText(text));
+                                PrintText(text, input);
                                 Console.SetCursorPosition(posX, posY);
                             }
-                            Console.Write(PrintText(text));
-                            Console.SetCursorPosition(posX, posY);
+                            PrintText(text, input);
+                            Console.SetCursorPosition(posX, posY + input.Count);
                             break;
                         }
                 }
@@ -295,44 +245,18 @@ namespace project.presentation_layer
         /// Asks the user for descriotion of the note
         /// </summary>
         /// <returns></returns>
-        private string CreateNewNoteText()
-        {
-            Console.Clear();
-            Console.WriteLine("Note Description\n" +
-                              "(Press escape to stop writing)\n"+
-                              "(Press any key to continue)");
-            Console.ReadKey();
-            Console.Clear();
-
-
-            List<string> text = new List<string>();
-            text.Add("");
-            int posX = 0;
-            int posY = 0;
-
-            string description = TextEditor(posX, posY, text);
-            return description;
-        }
         /// <summary>
         /// Writes the description of a note and gives the user ability to rewrite it
         /// </summary>
         /// <param name="oldDescription"></param>
         /// <returns></returns>
-        private string CreateNewNoteText(string oldDescription)
+        private string CreateNewNoteText(string oldDescription, string meta)
         {
-            Console.Clear();
-            Console.WriteLine("Update your note description\n" +
-                              "(Press escape to stop writing)\n" +
-                              "(Press any key to continue)");
-            Console.ReadKey();
-            Console.Clear();
-
-
-            List<string> text = oldDescription.Split("\n").ToList();
+            List<string> text = StringToList(oldDescription);
             int posY = text.Count - 1;
             int posX = text[posY].Length;
             
-            string description = TextEditor(posX, posY, text);
+            string description = TextEditor(posX, posY, text, true, StringToList(meta));
             return description;
             
         }
@@ -341,14 +265,14 @@ namespace project.presentation_layer
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private string PrintText(List<string> text)
+        private string PrintText(List<string> text, List<string> input)
         {
             Console.Clear();
-            string result = "";
-            foreach (string s in text)
-            {
-                result += s + "\n";
-            }
+            string output = ListToString(input);
+            Console.Write(output);
+
+            string result = ListToString(text);
+            Console.Write(result);
             return result;
         }
         /// <summary>
@@ -384,12 +308,35 @@ namespace project.presentation_layer
             return result;
         }
 
+        private string ListToString(List<string> text)
+        {
+            string result = "";
+            foreach (string s in text)
+            {
+                result += s + "\n";
+            }
+            return result;
+        }
+        private List<string> StringToList(string text)
+        {
+            List<string> result = text.Split("\n").ToList();
+            return result;
+        }
+
         public Note CreateNote()
         {
             Console.Clear();
 
-            string noteName = CreateNewNoteName();
-            string text = CreateNewNoteText();
+            string metaTitle = "Note title:\n" +
+                              "(Press escape to stop writing)\n"
+                              + "";
+            string noteName = CreateNewNoteName("",metaTitle);
+
+
+
+            string metaDesc = "Note Description\n" +
+                              "(Press escape to stop writing)\n";
+            string text = CreateNewNoteText("",metaDesc);
 
             Note note = new Note(noteName, text);
 
@@ -399,8 +346,16 @@ namespace project.presentation_layer
         {
             Console.Clear();
 
-            string noteName = CreateNewNoteName(note.Title);
-            string text = CreateNewNoteText(note.Description);
+            string metaTitle = "Edit note title:" +
+                              "(Press escape to stop writing)\n"
+                              + "";
+            string noteName = CreateNewNoteName(note.Title,metaTitle);
+
+
+            string metaDesc = "Note Description\n" +
+                              "(Press escape to stop writing)\n"
+                              + "";
+            string text = CreateNewNoteText(note.Description,metaDesc);
 
             Note updatedNote = new Note(noteName, text);
 
