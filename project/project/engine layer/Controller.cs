@@ -8,7 +8,7 @@ using project.database_layer;
 
 namespace project.engine_layer
 {
-    class Controller
+    public class Controller
     {
         private IUserInterface userInterface = new ConsoleUserInterface();
         private NoteData noteDatabaseFunctions = new NoteData();

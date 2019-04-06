@@ -2,11 +2,14 @@
 using project.Models;
 using project.database_layer;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tests
 {
     public class DatabaseTests
     {
+        private NoteData noteDatabaseFunctions = new NoteData();
+        private ConfigurationData configurationDatabaseFunctions = new ConfigurationData();
         [Test]
         public void DoesItCreateNoteCorrectly()
         {
@@ -137,27 +140,33 @@ namespace Tests
             Assert.AreEqual(2, ConfigurationsList.Count, "The amount is incorrect.");
         }
         [Test]
-        //TODO...
         public void DoesItGetTheCorrectIdOfANote()
         {
-
+            Note note = new Note("TestTitle", "SampleDescription");
+            noteDatabaseFunctions.MakeNewNote(note);
+            Assert.AreSame(note, noteDatabaseFunctions.ShowSpecificNote(noteDatabaseFunctions.ShowAll().Last().NoteId));
         }
         [Test]
-        //TODO...
         public void DoesItDeleteNoteById()
         {
-
+            Note note = new Note("SampleTitle", "SampleDescription");
+            noteDatabaseFunctions.MakeNewNote(note);
+            
         }
         [Test]
-        //TODO...
         public void DoesItUpdateNote()
         {
-
+            Note original_note = new Note("SampleTitle", "SampleDescription");
+            Note updated_note = new Note("UpdatedTitle", "UpdatedDescription");
+            noteDatabaseFunctions.MakeNewNote(original_note);
+            updated_note.NoteId = noteDatabaseFunctions.ShowAll().Last().NoteId;
+            noteDatabaseFunctions.UpdateNote(updated_note);
+            Assert.AreSame(updated_note, noteDatabaseFunctions.ShowAll().Last());
         }
         [Test]
-        //TODO...
         public void DoesItUpdateConfiguration()
         {
+            Configuration config = new Configuration();
 
         }
     }
