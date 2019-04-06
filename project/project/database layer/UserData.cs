@@ -10,7 +10,7 @@ namespace project.database_layer
     /// <summary>
     /// The class UserData.
     /// </summary>
-    class UserData
+    public class UserData
     {
         /// <summary>
         /// This method registers new user in the Database from the SQL Server.
