@@ -194,9 +194,9 @@ namespace project.engine_layer
             else if(selection==2)
             {
                 User registering_user = userInterface.RegisterUser();
-                registering_user.ConfigurationID = 1;
                 registering_user.ConfigurationID = ConfigurationMenu();
                 userDatabaseFunctions.RegisterUser(registering_user);
+                currentUser = userDatabaseFunctions.ShowAll().Last();
                 OperationsMenu();
             }
             else
