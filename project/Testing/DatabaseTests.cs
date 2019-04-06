@@ -3,13 +3,20 @@ using project.Models;
 using project.database_layer;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Tests
 {
+    /// <summary>
+    /// The class DatabaseTests used for the various functions with the Database.
+    /// </summary>
     public class DatabaseTests
     {
         private NoteData noteDatabaseFunctions = new NoteData();
         private ConfigurationData configurationDatabaseFunctions = new ConfigurationData();
+        /// <summary>
+        /// This test checks if a note is created correctly.
+        /// </summary>
         [Test]
         public void DoesItCreateNoteCorrectly()
         {
@@ -35,6 +42,9 @@ namespace Tests
                 note.UserID,
                 "UserID must be int and is incorrectly set.");
         }
+        /// <summary>
+        /// This test checks if a user is created correctly.
+        /// </summary>
         [Test]
         public void DoesItCreateUserCorrectly()
         {
@@ -60,6 +70,9 @@ namespace Tests
                 user.ConfigurationID,
                 "ConfigurationID must be int and is incorrectly set.");
         }
+        /// <summary>
+        /// This test checks if a configuration is created correctly.
+        /// </summary>
         [Test]
         public void DoesItCreateConfigurationCorrectly()
         {
@@ -78,6 +91,9 @@ namespace Tests
                 configuration.BackgroundColour,
                 "Colors are not identical.");
         }
+        /// <summary>
+        /// This test ckecks if all notes in the database are displayed.
+        /// </summary>
         [Test]
         public void DoesItShowAllNotesCorrectly()
         {
@@ -99,6 +115,9 @@ namespace Tests
 
             Assert.AreEqual(2, NoteList.Count, "The amount is incorrect.");
         }
+        /// <summary>
+        /// This test ckecks if all users in the database are displayed.
+        /// </summary>
         [Test]
         public void DoesItShowAllUsersCorrectly()
         {
@@ -120,6 +139,9 @@ namespace Tests
 
             Assert.AreEqual(2, UsersList.Count, "The amount is incorrect.");
         }
+        /// <summary>
+        /// This test ckecks if all configurations in the database are displayed.
+        /// </summary>
         [Test]
         public void DoesItShowAllConfigurationsCorrectly()
         {
@@ -139,35 +161,69 @@ namespace Tests
 
             Assert.AreEqual(2, ConfigurationsList.Count, "The amount is incorrect.");
         }
+        /// <summary>
+        /// This test ckecks if a note with a specific Id exists in the database.
+        /// </summary>
         [Test]
         public void DoesItGetTheCorrectIdOfANote()
         {
             Note note = new Note("TestTitle", "SampleDescription");
+            note.UserID = 1;
             noteDatabaseFunctions.MakeNewNote(note);
-            Assert.AreSame(note, noteDatabaseFunctions.ShowSpecificNote(noteDatabaseFunctions.ShowAll().Last().NoteId));
+            note.NoteId = noteDatabaseFunctions.ShowAll().Last().NoteId;
+            Assert.AreEqual(note.NoteId, noteDatabaseFunctions.ShowSpecificNote(noteDatabaseFunctions.ShowAll().Last().NoteId).NoteId);
+            noteDatabaseFunctions.DeleteNote(note.NoteId);
         }
+        /// <summary>
+        /// This test ckecks if a note with a specific Id is deleted from the database.
+        /// </summary>
         [Test]
         public void DoesItDeleteNoteById()
         {
             Note note = new Note("SampleTitle", "SampleDescription");
+            note.UserID = 1;
+            Note note2 = new Note("Title", "Description");
+            note2.UserID = 1;
             noteDatabaseFunctions.MakeNewNote(note);
-            
+            note.NoteId = noteDatabaseFunctions.ShowAll().Last().NoteId;
+            noteDatabaseFunctions.MakeNewNote(note2);
+            note2.NoteId = noteDatabaseFunctions.ShowAll().Last().NoteId;
+            noteDatabaseFunctions.DeleteNote(noteDatabaseFunctions.ShowAll().Last().NoteId);
+            Assert.AreNotEqual(note2.NoteId, noteDatabaseFunctions.ShowAll().Last().NoteId);
+            noteDatabaseFunctions.DeleteNote(note.NoteId);
         }
+        /// <summary>
+        /// This test ckecks if a note with a specific Id is updated in the database.
+        /// </summary>
         [Test]
         public void DoesItUpdateNote()
         {
             Note original_note = new Note("SampleTitle", "SampleDescription");
+            original_note.UserID = 1;
             Note updated_note = new Note("UpdatedTitle", "UpdatedDescription");
+            original_note.UserID = 1;
             noteDatabaseFunctions.MakeNewNote(original_note);
             updated_note.NoteId = noteDatabaseFunctions.ShowAll().Last().NoteId;
             noteDatabaseFunctions.UpdateNote(updated_note);
-            Assert.AreSame(updated_note, noteDatabaseFunctions.ShowAll().Last());
+            Assert.AreEqual(updated_note.NoteId, noteDatabaseFunctions.ShowAll().Last().NoteId);
+            noteDatabaseFunctions.DeleteNote(updated_note.NoteId);
         }
+        /// <summary>
+        /// This test ckecks if a configuration with a specific Id is updated from the database.
+        /// </summary>
         [Test]
         public void DoesItUpdateConfiguration()
         {
-            Configuration config = new Configuration();
-
+            Configuration original_config = new Configuration();
+            original_config.BackgroundColour = ConsoleColor.Black;
+            original_config.TextColour = ConsoleColor.White;
+            configurationDatabaseFunctions.MakeNewConfiguration(original_config);
+            Configuration new_config = new Configuration();
+            new_config.BackgroundColour = ConsoleColor.Yellow;
+            new_config.TextColour = ConsoleColor.Black;
+            new_config.Id = configurationDatabaseFunctions.ShowAll().Last().Id;
+            configurationDatabaseFunctions.ChangeConfiguration(new_config);
+            Assert.AreEqual(new_config.Id, configurationDatabaseFunctions.ShowAll().Last().Id);
         }
     }
 }
